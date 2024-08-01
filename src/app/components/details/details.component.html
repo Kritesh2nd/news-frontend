@@ -1,0 +1,49 @@
+<!-- <p>details works!</p> -->
+<main class="flex gap-12 plr50 pt40">
+  <!-- <ng-component *ngIf="articleDetail"> -->
+  <section class="flexcol fg9 fb0 bor" >
+    <div class="fs42 font-semibold leading-none pb20 text-stone-800">
+      {{articleDetail?.title}}
+    </div>
+    <div class="fs20 pb10 text-stone-700 pb20">
+      {{articleDetail?.shortContent}}
+    </div>
+    <div class="bor h-[500px] overflow-hidden br2 mb50">
+      <img [src]="articleDetail?.imageUrl" class="hw100 ofc"/>
+    </div>
+    <div class="flex pb20">
+      <span class="fs18 font-semibold">
+        By {{articleDetail?.authorFirstName}} {{articleDetail?.authorLastName}} 
+      </span>
+      &nbsp;&nbsp;&nbsp;
+      <span>
+        {{articleDetail?.calculatedDate}}
+      </span>
+    </div>
+    <div class="flexcol fs18 leading-loose pb20 text-stone-800">
+      <p class="pb10">
+        {{articleDetail?.content}} 
+      </p>
+      <p class="pb10" *ngFor="let content of extraArticleContent">
+        {{content}}
+      </p>
+    </div>
+
+  </section>  
+<!-- </ng-component> -->
+  <section class="flexcol fg4 fb0 bor" [hidden]="!mostReadArticles">
+    <a
+      [routerLink]="['/','details']" 
+      [queryParams]="{uuid:generateUUID(),newsId:article.articleId}"
+      class="flex gap-2 mb15 jcsb" 
+      *ngFor="let article of mostReadArticles"
+    >
+      <div class="fg6 fb0 bor fs18 font-semibold text-stone-800 leading-tight">
+        {{article.title}}
+      </div>
+      <div class="imageContainer fg4 fb0 bor h-[80px] br3 overflow-hidden">
+        <img class="image hw100 ofc br3" [src]="article.imageUrl"/>
+      </div>
+    </a>
+  </section>
+</main>

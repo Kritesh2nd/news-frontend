@@ -1,0 +1,24 @@
+<main class="flexcol hw100">
+  <section class="navigationSection w100 bor z-30">
+    <app-navigaiton class="bor" (manageAuthPage)="manageHeaderAuthPage()"></app-navigaiton>
+  </section>
+  <div class="flexcol w100 aic plr20 bor mt60">
+    
+    <a [routerLink]="['/']"  class="fs60 leading-none mtb10 h-16 bor cup">
+      <img class="hw100 obf" src="../../../assets/icons/logoAndName.png"/>
+    </a>
+    <div class="subheading rel flex jcsb w100 pb3">
+      <div class="flex aife fs13 fg1 fb0 colx2 " title="date and time">
+        {{getFormattedDate()}}
+      </div>
+      <div class="flexcen flex aife fs16 fg5 fb0 font-semibold" title="sub title">
+        {{getQuote()}}
+      </div>
+      <div class="flex jcfe aife fs15 fg1 fb0 colx1" title="temperature">
+        Current Temperature: 30&deg;c
+         
+      </div>
+    </div>
+
+  </div>
+</main>

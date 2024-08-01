@@ -1,0 +1,13 @@
+.navigationSection{
+  position: fixed;
+}
+
+.subheading::after{
+  content:'';
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  background: #f00;
+  left:0;
+  bottom: 0;
+}

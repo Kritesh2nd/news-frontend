@@ -1,0 +1,13 @@
+div ::before{
+  content:'';
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  background: #333;
+  left:0;
+  top: 0;
+}
+
+a:hover{
+    text-decoration: underline;
+}

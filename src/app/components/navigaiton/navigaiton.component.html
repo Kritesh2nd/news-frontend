@@ -1,0 +1,51 @@
+<main class="flex p10 gap16 colw bg-stone-800 h-[60px]">
+  <section class="flex aic fg1 out" *ngIf="!showSearch">
+    <a 
+      class="fs15 mr-6 col"
+      [routerLink]="['/','category']" 
+      [queryParams]="{value:cate.categoryName| lowercase,}"
+      *ngFor="let cate of categoryList"
+    >
+      {{cate.categoryName | capitalizeFirst}}
+    </a>
+  </section>
+  <section class="flex jcc w100 bor" *ngIf="showSearch">
+    <div class="flex jcfe aic rel bor">
+      <input type="text" class="bg-stone-700 colw" type="text" placeholder="search..." [(ngModel)]="searchKeyword" (input)="userInput()"/>
+      <span class="flexmid abs out pr10 cup bor" (click)="manageSearch()">
+        <mat-icon class="close out fs20 bor" aria-label="close">close</mat-icon>
+      </span>
+      <div class="searchResultList abs bor w100 z-20 bg-stone-800 p20 br5" *ngIf="searchKeyword.length > 0">
+        <span class="colx3" *ngIf="articleTilteList.length == 0">No Search Result Found</span>
+        
+        <div class="flex jcsb gap-4 searchResultTitle bor ptb10 mb5 cup bor" *ngFor="let articleTile of articleTilteList">
+          <div class="w20 searchResult searchImageContainer bor h-[60px]">
+            <img class="searchResult searchImage hw100 br2 borx2 ofc" [src]="articleTile.imageUrl"/>
+           </div>
+           <div class="w70 flexcol searchResult fg1 textContainer bor">
+            <div class="searchResultTitleName font-medium bor " [attr.data-keyword]="searchKeyword" appHighlightKeyword >{{articleTile.title}}</div>
+            <div class="searchResultContent shortContent bor " >{{articleTile.shortContent}}</div>
+           </div>
+        </div>
+
+        <span class="moreSearchResult flex jcfe colx3" *ngIf="articleTilteList.length != 0">More Results</span>
+
+      </div>
+    </div>
+  </section>
+  <section class="flex" *ngIf="!showSearch">
+    
+    <!-- [routerLink]="['/','auth']" 
+      [queryParams]="{type:'signup'}" -->
+
+    <div
+      class="flexmid cup"
+      (click)="manageAuthNavigationPage()"
+    >
+    <mat-icon aria-label="account_circle" >account_circle</mat-icon>
+    </div>
+  </section>
+  <section class="flexmid" (click)="manageSearch()" *ngIf="!showSearch">
+    <mat-icon  class="bor cup" aria-label="search">search</mat-icon>
+  </section>
+</main>

@@ -1,0 +1,11 @@
+.imageContainer{
+  overflow: hidden;
+}
+.image{
+  transform: scale(1);
+  transition:.4s;
+}
+.image:hover{
+  transform: scale(1.1);
+}
+  

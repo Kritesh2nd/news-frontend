@@ -1,0 +1,19 @@
+<!-- <p>visual-stories works!</p> -->
+<main class="flexcol bor">
+  <div class="fs16 font-semibold mb-6">VISUAL STORIES</div>
+  <div class="flex jscb gap-6" *ngIf="visualTilteList.length != 0">
+    <a  
+      [routerLink]="['/','details']" 
+      [queryParams]="{uuid:generateUUID(),newsId:article.articleId}" 
+      *ngFor="let article of visualTilteList"
+      class="flexcol gap-4 fg1 fb0 bor" 
+    >
+      <div class="imageContainer br3 h-[200px]">
+        <img [src]="article.imageUrl" class="image ofc hw100 cup br3"/>
+      </div>
+      <div class="bor fs18 font-semibold text-stone-800 leading-tight">
+        {{article.title}}
+      </div>
+    </a>
+  </div>
+</main>

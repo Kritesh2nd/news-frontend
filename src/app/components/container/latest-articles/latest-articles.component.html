@@ -1,0 +1,43 @@
+<!-- <p>latest-articles works!</p> -->
+<main class="flex gap-10 bor">
+  <section class="flexcol fg9 fb0 non">
+    <div class="fs16 font-semibold mb-6">LATEST UPDATES</div>
+    
+    <div class="flex gap-8 bor mb-8 fb0" *ngFor="let article of latestArticlesList">
+      <div class="flexcol fg5 fb0 bor">
+        <a [routerLink]="['/','details']" [queryParams]="{uuid:generateUUID(),newsId:article.articleId}" class="bor fs18 font-semibold text-stone-800 leading-tight">
+          {{article.title}}
+        </a>
+        <div class="bor fs13 ff1 ptb5 text-stone-500">
+          By {{article.authorFirstName}} {{article.authorLastName}}
+        </div>
+        <div class="test bor fs16 text-stone-800 leading-6">
+          {{article.shortContent}} {{article.title}} {{article.shortContent}} {{article.title}}
+        </div>
+      </div>
+      <a 
+        [routerLink]="['/','details']" 
+        [queryParams]="{uuid:generateUUID(),newsId:article.articleId}" 
+        class="bor imageContainer fg2 fb0 h-[140px] br3 bor"
+      >
+        <img class="image hw100 ofc br3" [src]="article.imageUrl"/>
+      </a>
+    </div>
+  </section>
+  <section class="flexcol fg4 fb0 bor">
+    <div class="fs16 font-semibold mb-6">PUBLIC PULSE</div>
+    
+    <a 
+      [routerLink]="['/','details']" 
+      [queryParams]="{uuid:generateUUID(),newsId:choosenArticle.articleId}" 
+      *ngIf="choosenArticle"
+    >
+      <div class="imageContainer bor br3 mb14">
+        <img [src]="choosenArticle.imageUrl" class="image ofc hw100 cup br3"/>
+      </div>
+      <div class="bor fs20 font-semibold text-stone-800 leading-tight">
+        {{choosenArticle.title}}
+      </div>
+    </a>
+  </section>
+</main>
