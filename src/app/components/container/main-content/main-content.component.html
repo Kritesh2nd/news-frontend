@@ -3,10 +3,9 @@
   <!-- left section -->
   <section class="flexcol main-left flex fg4 fb0 bor ">
     <main class="flexcol mb28 bor" *ngFor="let article of articleMiniList">
-      
         <a 
           [routerLink]="['/details']" 
-          [queryParams]="{uuid:generateUUID(),newsId:article.articleId}"     
+          [queryParams]="{uuid:generateUUID(),newsId:article.articleId}"
           class="bor fs18 font-semibold text-stone-800 leading-tight"
         >
           {{article.title}}

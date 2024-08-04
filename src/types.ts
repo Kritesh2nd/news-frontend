@@ -51,6 +51,7 @@ export interface UserLogin{
 export interface UserSignUp{
   firstName: string,
   lastName: string,
+  username: string,
   email: string,
   password: string,
 }
@@ -150,6 +151,27 @@ export class UserAuth {
     public lastName?: string,
   ) {  }
 
+}
+
+export const sideBar = [
+  {
+    title:'Create Article',
+    link:'dashboard/article/create'
+  },
+  {
+    title:'Read Articles',
+    link:'dashboard/article/read'
+  },
+
+]
+
+export interface CreateArticle {
+  articleId?: number,
+  title: string,
+  shortContent: string,
+  imageUrl?: string,
+  content: string,
+  category: string,
 }
 
 // {

@@ -1,7 +1,7 @@
 import { LowerCasePipe, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Article, Category } from "../../../types";
-import { RouterOutlet, RouterModule }   from '@angular/router';
+import { RouterOutlet, RouterModule, Router }   from '@angular/router';
 import { MaterialModule } from '../../utils/material/material.module';
 
 import { CategoryService } from './../../services/category.service';
@@ -14,6 +14,7 @@ import { HighlightKeywordDirective } from '../../directive/highlight-keyword.dir
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs'; 
 import _ from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 
 // import { cube } from "../../../assets/icons";
 
@@ -50,8 +51,13 @@ export class NavigaitonComponent implements OnInit{
   subscription: Subscription | undefined;
 
 
-  constructor(private categoryService: CategoryService, private articlesService: ArticlesService) {}
+  constructor(
+    private router: Router,
+    private categoryService: CategoryService, 
+    private articlesService: ArticlesService
+  ) {}
 
+  
   fetchSearchResult():void {
 
     this.articlesService.getArticleList('http://localhost:8080/article/request?search='+this.searchKeyword)
@@ -92,6 +98,7 @@ export class NavigaitonComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    console.log(this.router.url, "url chek");
     this.categoryService.getCategoryList('http://localhost:8080/category/list')
     .subscribe({
       next:(data: Category[]) => {
@@ -103,24 +110,17 @@ export class NavigaitonComponent implements OnInit{
     })
 
     this.fetchSearchResult();
+
+    
   }
 
-  waitSearch(): void {
-  //   const searchInput = document.getElementById('searchInput');
+  clearSearch(): void{
+    this.showSearch = false;
+    this.searchKeyword = "";
+  }
 
-  //   this.subscription = fromEvent(searchInput, 'input').pipe(
-  //     map((event: Event) => (event.target as HTMLInputElement).value),
-  //     debounceTime(300), // wait for 300ms pause in events
-  //     distinctUntilChanged(), // ignore if next search term is same as previous
-  //     switchMap((term: string) => this.articlesService.getSearchResultArticleTitle('http://localhost:8080/article/request?search=' + term))
-  //   ).subscribe({
-  //     next: (data: Article[]) => {
-  //       this.articleTilteList = [...data];
-  //     },
-  //     error: (error) => {
-  //       console.log(error);
-  //     }
-  //   });
+  generateUUID(): string {
+    return uuidv4();
   }
 }
 

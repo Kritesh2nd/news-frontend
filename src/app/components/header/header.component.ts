@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavigaitonComponent } from "../navigaiton/navigaiton.component";
 import { RouterModule, RouterOutlet } from '@angular/router';
 
@@ -12,7 +12,11 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
+
+  ngOnInit(): void {
+
+  }
 
   @Output() manageAuthPage = new EventEmitter();
   

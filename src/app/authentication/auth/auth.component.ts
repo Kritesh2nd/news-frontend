@@ -2,12 +2,10 @@ import { UsersService } from './../../services/users.service';
 import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { MaterialModule } from '../../utils/material/material.module';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User, UserAuth, UserLogin, UserSignUp, TokenResponse } from '../../../types';
 import { FormBuilder, FormsModule, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-// import {jwt_decode} from 'jwt-decode';
-// import { jwt } from 'jsonwebtoken';
 
 import { catchError, Observable, of } from 'rxjs';
 
@@ -23,13 +21,9 @@ import { catchError, Observable, of } from 'rxjs';
 export class AuthComponent {
 
   authSignIn: boolean = true;
-
   showPassword: boolean = false;
-
+  
   formValidate: boolean = false;
-  
-
-  
 
   @Output() manageAuthPage = new EventEmitter();
   manageAuthPageClose(){
@@ -37,10 +31,10 @@ export class AuthComponent {
   }
 
   authForm = this.formBuilder.group({
-    firstName:'',
-    lastName:'',
-    email:'',
-    password:'',
+    firstName:'Kritesh',
+    lastName:'Thapa',
+    email:'kritesh1@gmail.com',
+    password:'password',
   })
 
   validCheck = {
@@ -56,9 +50,7 @@ export class AuthComponent {
     email:'',
     password:'',
   }
-  constructor(private router: Router, private formBuilder: FormBuilder, private usersService: UsersService){}
-
-
+  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private usersService: UsersService){}
 
   handelAuthType():void{
     this.authSignIn = !this.authSignIn;
@@ -66,52 +58,42 @@ export class AuthComponent {
 
   token:TokenResponse|null=null;
 
-  fetchUserToken(){
-    return this.usersService.userLogin('http://localhost:8080/login')
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return of([]);
-        })
-      )
-      // .subscribe((t)=>{if(t){
-      //   this.token = t as TokenResponse
-      // }});
-  }
-
+  userLogin : UserLogin | undefined;
   manageLogin():void{ 
     this.formValidate = true;
+    
+    let userData = {
+      email: this.authForm.value.email,
+      password: this.authForm.value.password,
+    } 
+
+    this.loginUser(userData as UserLogin);
 
     if(this.validCheck.email && this.validCheck.password){
-      this.fetchUserToken()
-      .p
-      .subscribe({
-        next:(data) => {
-          data = data as TokenResponse;
-          console.log(data);
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      })
-
-      // .subscribe((t)=>{if(t){
-      //   this.token = t as TokenResponse
-      // }});
+     
       console.log("user logged in", this.token);
     }
     else{
       console.log("please input valid user credentials");
     }
-
-
   }
 
   manageSignUp():void{
     this.formValidate = true;
 
+    let userData = {
+      firstName: this.authForm.value.firstName,
+      lastName: this.authForm.value.lastName,
+      username: this.authForm.value.email,
+      email: this.authForm.value.email,
+      password: this.authForm.value.password,
+    } 
+
+    console.log("sign up ", this.validCheck);
+  
     if(this.validCheck.firstName && this.validCheck.lastName && this.validCheck.email && this.validCheck.password){
       console.log("user account created");
+      this.sigupUser(userData as UserSignUp);
     }
     else{
       console.log("please input valid user data");
@@ -174,20 +156,14 @@ export class AuthComponent {
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
         const password: string = this.authForm.value.password ? this.authForm.value.password : "";
         
-        const validate =  password.length >= minLength &&
-            hasUpperCase.test(password) &&
-            hasLowerCase.test(password) &&
-            hasDigit.test(password) &&
-            hasSpecialChar.test(password);
-        // console.log(
-        //   "password",password,
-        //   "lenght",password.length >= minLength,
-        //   "upper",hasUpperCase.test(password),
-        //   "lower",hasLowerCase.test(password),
-        //   "digit",hasDigit.test(password),
-        //   "special",hasSpecialChar.test(password)
-        // );
-          console.log("password validate",validate);
+        const validate =  password.length >= minLength;
+        // const validate =  password.length >= minLength &&
+        //     hasUpperCase.test(password) &&
+        //     hasLowerCase.test(password) &&
+        //     hasDigit.test(password) &&
+        //     hasSpecialChar.test(password);
+          
+            console.log("password validate",validate);
           this.validCheck.password = validate;
           this.errorMessage.password = validate? "" : "invalid password";
       }
@@ -196,26 +172,53 @@ export class AuthComponent {
   }
 
   extractPayload(token: string): any {
-    // try {
-    //   // Decode the token without verifying
-    //   const decodedToken = jwt.decode(token);
   
-    //   if (decodedToken && typeof decodedToken === 'object') {
-    //     return decodedToken;
-    //   } else {
-    //     throw new Error('Invalid token');
-    //   }
-    // } catch (error) {
-    //   console.error('Error decoding token:', error);
-    //   return null;
-    // }
+  }
+
+  loginUser(userInfo: UserLogin) {
+    this.usersService.userLogin(`http://localhost:8080/login`, userInfo)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          if(data){
+            const decodedJWT = JSON.parse(window.atob(data.token.split('.')[1]));
+            localStorage.setItem('jwt_token',data.token);
+            // console.log(decodedJWT.roles);
+            // console.log(decodedJWT.sub);
+            this.authForm.reset();
+            this.navigateToDashboard();
+          }
+         
+        },
+        error: (error) => {
+          console.log("token dosent exist",error);
+        },
+      });
+  }
+
+  sigupUser(userInfo: UserSignUp): void{
+    console.log("sigupUser(userInfo: UserSignUp): void{",userInfo);
+    this.usersService.userSignUp('http://localhost:8080/signup',userInfo)
+    .subscribe({
+      next: (data) => {
+        console.log("data",data);
+        // this.navigateToLogin();
+      },
+      error: (error) => {
+        console.log("user signup",error);
+      },
+    });
+  }
+
+  navigateToLogin(): void {
+    this.router.navigate(['/','auth']);
+    this.authSignIn = false;
+    // showPassword: boolean = true;
+
+  }
+
+  navigateToDashboard(): void {
+    this.router.navigate(['/','dashboard']);
   }
   
-//   getDecodedAccessToken(token: string): any {
-//     try {
-//       return jwt_decode(token);
-//     } catch(Error) {
-//       return null;
-//     }
-//   }
 }

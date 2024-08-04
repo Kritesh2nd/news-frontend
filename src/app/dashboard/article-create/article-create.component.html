@@ -1,0 +1,51 @@
+<main class="flex hw-100">
+
+    <!-- dashboard sidebar -->
+  <section class="flex w20">
+    <app-dash-sidebar class="hw100"></app-dash-sidebar>
+  </section>
+
+  <!-- dashboard component -->
+  <section class="w80 p30 bor">
+    <div class="borx3">
+      <form 
+        class="p20 bgx4 br10 borx2" 
+        [formGroup]="articleDataForm"
+        (ngSubmit)="onSubmit()"
+      >
+
+    <div class="flexcol ">
+      <label for="title" class="pb8">Tile</label>
+      <input type="text" class="formName fs15 ptb3 plr6 borx2 br3 mb12" formControlName="title" placeholder="your name..."/>
+    </div>
+
+    <div class="flexcol ">
+      <label for="shortContent" class="pb8">Sub Heading</label>
+      <input type="text" class="formName fs15 ptb3 plr6 borx2 br3 mb12" formControlName="shortContent" placeholder="your address..."/>
+    </div>
+    
+    <div class="flexcol ">
+      <label for="category" class="pb8">Category</label>
+      <select class="formName fs15 ptb3 plr6 borx2 br3 mb12" name="category" formControlName="category">
+        <option class="formName fs15 ptb3 plr6 borx2 br3 mb12" *ngFor="let category of categoryList"  [value]="category.categoryName">{{category.categoryName | capitalizeFirst}}</option>
+      </select>
+    </div>
+    
+    <div class="flexcol ">
+      <label for="content" class="pb8">Content</label>
+      <textarea class="resize-none formName fs15 ptb3 plr6 borx2 br3 mb12 h-[100px]" formControlName="content" placeholder="article content"></textarea>
+    </div>
+
+    <!-- <div class="flexcol none">
+      <label for="imageUrl" class="pb8">Image</label>
+      <input type="file" name="imageUrl" formControlName="imageUrl"/>
+    </div> -->
+
+    <button class="ptb6 plr10 borx2 bgprimary br3 colw fs15 cup mt10" type="submit">
+      Upload
+    </button>
+  </form>
+    </div>
+  </section>
+  
+</main>
