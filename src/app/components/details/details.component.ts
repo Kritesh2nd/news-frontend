@@ -18,6 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
 })
+
 export class DetailsComponent implements OnInit {
   
   newsId: number = 0;

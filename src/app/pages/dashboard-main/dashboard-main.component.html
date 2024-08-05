@@ -1,13 +1,25 @@
-<main class="flex hw-100">
-
-    <!-- dashboard sidebar -->
+<main class="flex hw-100 bor">
+  <!-- dashboard sidebar -->
   <section class="flex w20">
     <app-dash-sidebar class="hw100"></app-dash-sidebar>
   </section>
 
   <!-- dashboard component -->
-  <section class="w80 p30 borx3">
-    comp
+  <section class="w80 bor bor">
+    <div class="flexcol bor hw100 overflow-auto ">
+      <!-- create article -->
+      <div
+        class=""
+        data-name="create article"
+        *ngIf="dashPage == 'createArticle'"
+      >
+        <app-article-create></app-article-create>
+      </div>
+
+      <!-- read article -->
+      <div class="" data-name="read article" *ngIf="dashPage == 'readArticle'">
+        <app-article-read></app-article-read>
+      </div>
+    </div>
   </section>
-  
 </main>

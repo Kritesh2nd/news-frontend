@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { sideBar } from '../../../types';
+import { Link, LinkParamterts, sideBar } from '../../../types';
 import { NgFor, NgIf } from '@angular/common';
 import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/rout
   styleUrl: './dash-sidebar.component.scss'
 })
 export class DashSidebarComponent implements OnInit{
-  sideBar: any;
+  sideBar: Link[] = [];
 
 
   constructor (private router: Router){
@@ -34,9 +34,14 @@ export class DashSidebarComponent implements OnInit{
     });
   }
 
-  handelLink(link: string):string{
-    return "/"+link;
-  }
+  // mangaeLinkParams(params?: LinkParamterts[]): any{
+  //   let cat: any;
+  //   console.log(params);
+  //   cat.setK
+  //   cat = {
+      
+  //   }
+  // }
 
   LogOut(): void{
     localStorage.removeItem("jwt_token");  

@@ -153,14 +153,36 @@ export class UserAuth {
 
 }
 
-export const sideBar = [
+export interface Link {
+  title: string,
+  link: string,
+  params?: LinkParamterts[],
+}
+
+export interface LinkParamterts {
+  name: string,
+  value: string,
+}
+export const sideBar: Link[] = [
   {
     title:'Create Article',
-    link:'dashboard/article/create'
+    link:'dashboard',
+    params: [
+      {
+        name:"page",
+        value:"createArticle"
+      }
+    ]
   },
   {
-    title:'Read Articles',
-    link:'dashboard/article/read'
+    title:'Read Article',
+    link:'dashboard',
+    params: [
+      {
+        name:"page",
+        value:"readArticle"
+      }
+    ]
   },
 
 ]
@@ -173,6 +195,8 @@ export interface CreateArticle {
   content: string,
   category: string,
 }
+
+
 
 // {
 //   "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrcml0ZXNoQGdtYWlsLmNvbSIsImlhdCI6MTcyMjQyNDY5MywiZXhwIjoxNzIyNDI4MjkzfQ.nti5T3jkHYnE7XJpL6x_DON7OT12Ex57fIOpyKc02uk",

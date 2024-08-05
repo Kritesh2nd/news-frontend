@@ -46,13 +46,24 @@
       </div>
     </div>
 
+    <!-- suggested change removes error of expressionchangedafterchecked -->
+
     <div class="bor flexcol aic mb-5 rel">
-      <input [type]="managePasswordType()" class="ptb8 plr14 w-[340px] borx br2 fs16" placeholder="password..." formControlName="password" (input)="authFormValidate('password')"/>
+      <input [type]="showPassword?'text':'password'" class="ptb8 plr14 w-[340px] borx br2 fs16" placeholder="password..." formControlName="password" (input)="authFormValidate('password')"/>
       <mat-icon class="flexmid abs right-2 out h-5 w-5 fs20 bor cup top-2" aria-label="remove_red_eye" (click)="managePasswordType()">remove_red_eye</mat-icon>
       <div class="errorMessage w100" *ngIf="formValidate">
         {{errorMessage.password}}
       </div>
     </div>
+
+    <!-- current -->
+    <!-- <div class="bor flexcol aic mb-5 rel">
+      <input [type]="managePasswordType()" class="ptb8 plr14 w-[340px] borx br2 fs16" placeholder="password..." formControlName="password" (input)="authFormValidate('password')"/>
+      <mat-icon class="flexmid abs right-2 out h-5 w-5 fs20 bor cup top-2" aria-label="remove_red_eye" (click)="managePasswordType()">remove_red_eye</mat-icon>
+      <div class="errorMessage w100" *ngIf="formValidate">
+        {{errorMessage.password}}
+      </div>
+    </div> -->
 
     <div class="flex mb-5">
       <label class="flex gap-2 bor">

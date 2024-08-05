@@ -12,7 +12,7 @@ export const routes: Routes = [
   {
     path: '',
     component: GeneralComponent,
-    pathMatch:'full',
+    
   },
   {
     path: 'request',
@@ -27,27 +27,10 @@ export const routes: Routes = [
     component: DetailsComponent,
   },
   {
-    path: 'auth',
-    component: GeneralComponent,
-  },
-  {
     path: 'dashboard',
     component: DashboardMainComponent,
-    pathMatch:'full',
+    
   },
-  {
-    path: 'dashboard/article/create',
-    component: ArticleCreateComponent,
-  },
-  {
-    path: 'dashboard/article/read',
-    component: ArticleReadComponent,
-  },
-  {
-    path: 'dashboard/article/update',
-    component: ArticleCreateComponent,
-  },
-  // http://localhost:4200/dashboard/article/add
   {
     path: 'offline',
     component: ServerOfflineComponent,

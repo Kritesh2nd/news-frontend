@@ -1,5 +1,5 @@
 import { Article } from './../../../../types';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ArticlesService } from '../../../services/articles.service';
 
 import { NgFor, NgIf } from '@angular/common';
@@ -29,7 +29,7 @@ export class MainContentComponent implements OnInit{
 
   articleRightMiniList: Article[] = [];
 
-  constructor(private articlesService: ArticlesService, private cdr: ChangeDetectorRef) {}
+  constructor(private articlesService: ArticlesService) {}
   
   
   fetchArticleImageMiniList(pageNumber:number, pageSize: number): Observable<Article[]> {
@@ -73,8 +73,6 @@ export class MainContentComponent implements OnInit{
       next: (data: Article) => {this.articleCenterSecondary = data;},
       error: (error) => {console.log("error");}
     });
-
-    this.cdr.detectChanges();
   }
 
   generateUUID(): string {

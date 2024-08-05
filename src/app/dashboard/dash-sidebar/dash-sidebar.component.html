@@ -1,17 +1,29 @@
 <main class="flexcol bg-stone-800 hw100 colw">
   <div class="titlebox flexcol titlebox p20 bg-stone-900">
-    <div class="fs28">Insight Informer</div>
-    <div class="colx4 fs14">Get busy living or get busy dying</div>
-    
+    <a [routerLink]="['/']" class="bor">
+      <div class="fs28">Insight Informer</div>
+      <div class="colx4 fs14">Get busy living or get busy dying</div>
+    </a>
   </div>
   <div class="flexcol p20 overflow-auto">
     <div class="">
-      <div class="flex mb5 bor" *ngFor="let side of sideBar">
-        <a [routerLink]="handelLink(side.link)"  class="p10 hw100 bor hover:underline">{{side.title}}</a>
+      
+      <div class="flex mb5 bor">
+        <a [routerLink]="['/','dashboard']"
+         [queryParams]="{page:'createArticle'}"
+        class="p10 hw100 bor hover:underline">Create Article</a>
       </div>
+
+      <div class="flex mb5 bor">
+        <a [routerLink]="['/','dashboard']"
+         [queryParams]="{page:'readArticle'}" 
+        class="p10 hw100 bor hover:underline">Read Article</a>
+      </div>
+      
       <div class="p10 mb5 cup bor hover:underline" (click)="LogOut()">
         Log Out
       </div>
+    
     </div>
   </div>
 </main>

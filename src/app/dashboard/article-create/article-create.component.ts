@@ -63,14 +63,27 @@ export class ArticleCreateComponent implements OnInit{
     this.createArticle = this.articleDataForm.value as CreateArticle;
     
     console.log("this.createArticle",this.createArticle);
+    this.createArticleUrl(this.createArticle);
     
-    
-    // this.articleDataForm.reset();
+    this.articleDataForm.reset();
   }
 
   createArticleUrl(articleData: CreateArticle): void{
-    // articleService
-    // this.articleService.
+    const articleDataSave = {
+      title:articleData.title,
+      shortContent:articleData.shortContent,
+      content:articleData.content,
+      category:articleData.category,
+    }
+    this.articleService.createArticle('http://localhost:8080/article/addContent',articleDataSave as CreateArticle)
+    .subscribe({
+      next: (data) => {
+        console.log("data",data);
+      },
+      error: (error) => {
+        console.log("articel add",error);
+      },
+    });
   }
   
   getCategoryList():void{
@@ -85,6 +98,10 @@ export class ArticleCreateComponent implements OnInit{
         console.log(error);
       },
     })
+  }
+
+  clearArticle():void{
+    this.articleDataForm.reset();
   }
 
 }

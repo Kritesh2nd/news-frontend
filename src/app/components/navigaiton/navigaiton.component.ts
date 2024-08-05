@@ -33,7 +33,13 @@ export class NavigaitonComponent implements OnInit{
 
   @Output() manageAuthPage = new EventEmitter();
   manageAuthNavigationPage(){
-    this.manageAuthPage.emit( );
+    const token = localStorage.getItem("jwt_token");
+    if(token){
+      this.navigateToDashboard();
+    }
+    else{
+      this.manageAuthPage.emit( );
+    }
   }
 
   tempArticleTilteList: Article[] = [];
@@ -114,9 +120,14 @@ export class NavigaitonComponent implements OnInit{
     
   }
 
+
   clearSearch(): void{
     this.showSearch = false;
     this.searchKeyword = "";
+  }
+
+  navigateToDashboard(){
+    this.router.navigate(['/','dashboard']);
   }
 
   generateUUID(): string {

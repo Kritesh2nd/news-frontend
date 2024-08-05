@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
@@ -27,7 +27,7 @@ export class LatestArticlesComponent implements OnInit, AfterViewInit{
 
   ediotrsPick : Article[] = [];
 
-  constructor(private articlesService: ArticlesService, private cdr: ChangeDetectorRef) {}
+  constructor(private articlesService: ArticlesService) {}
 
   fetchArticleImageMiniList(pageNumber:number, pageSize: number): Observable<Article[]> {
     return this.articlesService.getArticleList('http://localhost:8080/article/listMiniImage?pagination=true&pageNumber='+pageNumber+'&pageSize='+pageSize)
@@ -56,7 +56,6 @@ export class LatestArticlesComponent implements OnInit, AfterViewInit{
       },
       error: (error) => {console.log(error);}
     });
-    this.cdr.detectChanges();
     
   }
 

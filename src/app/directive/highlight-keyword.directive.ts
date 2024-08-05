@@ -11,6 +11,7 @@ export class HighlightKeywordDirective implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.highlightText();
+    
   }
   
   private highlightText() {

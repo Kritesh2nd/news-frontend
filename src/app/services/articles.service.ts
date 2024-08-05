@@ -1,7 +1,8 @@
+import { CreateArticle } from './../../types';
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { ArticleRequest, Article } from '../../types';
+import { Article } from '../../types';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class ArticlesService {
       responseType: 'json'
     }
     );
+  };
+
+  createArticle = (url: string, body: CreateArticle): Observable<any> => {    
+    return this.apiService.post<any>(url, body);  
   };
 
   // createArticle = (url: string, body: UserSignUp): Observable<TokenResponse> => {    

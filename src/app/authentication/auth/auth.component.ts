@@ -18,7 +18,7 @@ import { catchError, Observable, of } from 'rxjs';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
 
   authSignIn: boolean = true;
   showPassword: boolean = false;
@@ -33,9 +33,13 @@ export class AuthComponent {
   authForm = this.formBuilder.group({
     firstName:'Kritesh',
     lastName:'Thapa',
-    email:'kritesh1@gmail.com',
+    email:'kritesh@gmail.com',
     password:'password',
   })
+
+  ngOnInit(): void {
+    
+  }
 
   validCheck = {
     firstName:false,
@@ -100,9 +104,16 @@ export class AuthComponent {
     }
   }
 
-  managePasswordType(): string{
+  // managePasswordType(): string{
+  //   this.showPassword = !this.showPassword;
+  //   return !this.showPassword?"text":"password";
+  // }
+
+  // suggested change
+  // when using suggested change on html template ince showPasword value will determine value
+
+  managePasswordType(){
     this.showPassword = !this.showPassword;
-    return !this.showPassword?"text":"password";
   }
   
   navigateToHomePage(): number {

@@ -31,7 +31,6 @@ import { DashSidebarComponent } from './dashboard/dash-sidebar/dash-sidebar.comp
     GeneralComponent, DashboardMainComponent, CategoryNewsComponent,
     ErrorPageComponent, ServerOfflineComponent,
     
-    // SignInComponent, SignUpComponent, 
     AuthComponent, 
 
     DashSidebarComponent,
@@ -49,11 +48,11 @@ export class AppComponent implements OnInit {
 
   urlCategory: boolean = false;
 
-  // displayAuthPage: boolean = false;
-  displayAuthPage: boolean = true;
+  displayAuthPage: boolean = false;
+  // displayAuthPage: boolean = true;
 
   
-  constructor(private router: Router, private usersService: UsersService){}
+  constructor(private router: Router){}
   
   handelAuthPage():void{
     this.displayAuthPage = !this.displayAuthPage;
@@ -61,75 +60,8 @@ export class AppComponent implements OnInit {
   
 
   ngOnInit(){
-    this.manageDashboardAccess()
-    
-   
-
 
   }
-
-
-  manageDashboardAccess(): void {
-    const data = localStorage.getItem("jwt_token");
-    this.dashboardAccess();
-    if(!data){
-      this.navigateToHomePage();
-    }
-
-    this.verifyDashboard();
-
-    if(!this.verifyToken()){
-      // this.navigateToHomePage();
-    }
-    console.log(data);
-
-  }
-
-  dashboardAccess():void{
-    const currentUrl = this.router.url;
-    console.log("hello from app.", this.router.url);
-    
-    
-
-    console.log("this.urlDashboard",this.urlDashboard);
-
-    if(currentUrl.includes("dashboard")){
-      console.log("dashboard yes");
-      // this.manageDashboardAccess();
-      const jwtToken = localStorage.getItem("jwt_token");
-      console.log("jwtToken",jwtToken);
-      // const decodedJWT = JSON.parse(window.atob(jwtToken.token.split('.')[1]));
-      //       localStorage.setItem('jwt_token',data.token);
-      //       // console.log(decodedJWT.roles);
-      //       // console.log(decodedJWT.sub);
-      //       this.authForm.reset();
-      //       this.navigateToDashboard();
-    }
-
-  }
-
-  verifyDashboard(){
-    let containsDashboard: boolean = false;
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const currentUrl = this.router.url;
-        this.urlDashboard = currentUrl.includes('dashboard');
-        if(!this.urlDashboard){
-          this.navigateToHomePage();
-        }
-        if(localStorage.getItem("jwt_token")){
-
-        }
-      }
-    });
-    // return containsDashboard;
-  }
-
-  verifyToken():boolean{
-
-    return false;
-  }
-
 
 
   navigateToHomePage() {
