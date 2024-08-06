@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { DashSidebarComponent } from '../dash-sidebar/dash-sidebar.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Category, CreateArticle } from '../../../types';
-import { NgFor, NgIf } from '@angular/common';
+import { Article, Category, CreateArticle } from '../../../types';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
 import { ArticlesService } from '../../services/articles.service';
+import { catchError, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-article-create',
@@ -16,13 +17,32 @@ import { ArticlesService } from '../../services/articles.service';
     DashSidebarComponent,
     FormsModule,
     CapitalizeFirstPipe,
-    NgFor,NgIf, ReactiveFormsModule,
+    NgFor,NgIf, NgClass,
+    ReactiveFormsModule,
+    RouterOutlet, RouterModule,
   ],
   templateUrl: './article-create.component.html',
   styleUrl: './article-create.component.scss'
 })
 export class ArticleCreateComponent implements OnInit{
+  @Input() pageType: string="";
   
+  newsId:number=0;
+
+  selectedCateory: string = "sports";
+
+  articleDetail : Article = {
+    articleId: 0,
+    title: "",
+    authorFirstName: "",
+    authorLastName: "",
+    shortContent: "",
+    content: "",
+    imageUrl: "",
+    calculatedDate: "",
+    category:"business",
+  };
+
   categoryList : Category[] = [];
 
   currentUrl: string = "";
@@ -34,7 +54,13 @@ export class ArticleCreateComponent implements OnInit{
     category: "",
   };
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private categoryService: CategoryService, private articleService: ArticlesService){}
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder, 
+    private categoryService: CategoryService, 
+    private articleService: ArticlesService
+  ){}
 
   articleDataForm = this.formBuilder.group({
     title: "",
@@ -55,6 +81,17 @@ export class ArticleCreateComponent implements OnInit{
     console.log(this.currentUrl.includes("article"));
     console.log(this.currentUrl.includes("create"));
     console.log(this.currentUrl.includes("read"));
+
+    if(this.pageType=='detailArticle'){
+      this.setArticleMainById(true);
+      // this.articleDataForm.value.title?.disable();
+      
+    }
+    if(this.pageType=='updateArticle'){
+      this.setArticleMainById(false);
+      // this.articleDataForm.value.title?.disable();
+      
+    }
   }
 
   
@@ -102,6 +139,53 @@ export class ArticleCreateComponent implements OnInit{
 
   clearArticle():void{
     this.articleDataForm.reset();
+  }
+
+  fetchArticleMainById(id: number): Observable<Article> {
+    return this.articleService.getArticleById('http://localhost:8080/article/' + id)
+      .pipe(
+        catchError((error) => {
+          console.log(error);
+          return of();
+        })
+      );
+  }
+
+  setArticleMainById(inpDisable: boolean):void{
+    let tempArticleId:number;
+    this.route.queryParamMap.subscribe(params => {
+      const articleId = params.get('newsId');
+      this.newsId = articleId ? parseInt(articleId) as number : 0;
+      tempArticleId = articleId ? parseInt(articleId) : this.navigateToHomePage();
+
+      this.fetchArticleMainById(tempArticleId).subscribe({
+        next: (data: Article) => {
+          this.articleDetail = data;
+        
+          this.articleDataForm = this.formBuilder.group({
+            // title: this.articleDetail.title as string,
+            title: [{ value: this.articleDetail.title as string, disabled: inpDisable }],
+            shortContent: [{ value: this.articleDetail.shortContent as string, disabled: inpDisable }],
+            // imageUrl: "",
+            content: [{ value: this.articleDetail.content as string, disabled: inpDisable }],
+            category: [{ value: "sports", disabled: inpDisable }],
+          })
+        },
+        error: (error) => {console.log(error);}
+      });
+
+      
+    });
+  }
+  
+  manageCategory(optionCategory: string, selectedCategor?:string):boolean{
+    console.log(optionCategory == selectedCategor,optionCategory,selectedCategor);
+    return optionCategory == selectedCategor;
+  }
+
+  navigateToHomePage(): number {
+    this.router.navigate(['/']);
+    return 0;
   }
 
 }

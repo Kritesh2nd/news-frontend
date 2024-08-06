@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
   displayAuthPage: boolean = false;
   // displayAuthPage: boolean = true;
 
+  currentUrl: string = "";
   
   constructor(private router: Router){}
   
@@ -60,7 +61,14 @@ export class AppComponent implements OnInit {
   
 
   ngOnInit(){
+    this.manageDashboardView();
+  }
 
+  manageDashboardView(){
+    this.router.events.subscribe(() => {
+      this.currentUrl = this.router.url;
+      this.urlDashboard = this.currentUrl.includes("dashboard");
+    });
   }
 
 

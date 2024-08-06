@@ -65,6 +65,7 @@ export interface Article{
   content?: string,
   imageUrl?: string,
   calculatedDate?: string,
+  category?:string,
 }
 
 export interface ArticleRequest{

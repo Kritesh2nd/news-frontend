@@ -7,6 +7,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: H
   }
   
   let tokenData: string | null = null;
+  // let validToken: boolean = false;
 
   if (typeof localStorage !== 'undefined') {
     tokenData = localStorage.getItem('jwt_token');

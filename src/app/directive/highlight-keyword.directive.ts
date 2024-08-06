@@ -7,7 +7,7 @@ import { Directive, AfterViewInit, Component, ElementRef, ViewChild, Renderer2, 
 export class HighlightKeywordDirective implements AfterViewInit {
   
 
-  constructor(private el: ElementRef,private renderer: Renderer2) {}
+  constructor(private el: ElementRef) {}
 
   ngAfterViewInit(): void {
     this.highlightText();

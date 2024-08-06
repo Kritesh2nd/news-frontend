@@ -7,7 +7,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [
     RouterOutlet, RouterModule,
-    NavigaitonComponent, NavigaitonComponent
+    NavigaitonComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

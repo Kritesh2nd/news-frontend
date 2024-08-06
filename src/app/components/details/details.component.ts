@@ -9,7 +9,7 @@ import { RouterOutlet,RouterModule } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-details',
+  selector: 'app-details',  
   standalone: true,
   imports: [
     NgIf,NgFor,
@@ -41,7 +41,7 @@ export class DetailsComponent implements OnInit {
       );
   }
 
-  fetchArticleMiniById(id: number): Observable<Article> {
+  fetchArticleMainById(id: number): Observable<Article> {
     return this.articlesService.getArticleById('http://localhost:8080/article/' + id)
       .pipe(
         catchError((error) => {
@@ -57,7 +57,7 @@ export class DetailsComponent implements OnInit {
   }
   
   fetchArticleMiniByIdNew():void{
-    this.fetchArticleMiniById(this.newsId).subscribe({
+    this.fetchArticleMainById(this.newsId).subscribe({
       next: (data: Article) => {this.articleDetail = data;},
       error: (error) => {console.log(error);}
     });

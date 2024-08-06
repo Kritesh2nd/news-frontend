@@ -1,15 +1,77 @@
-<main class="flexcol h-100 p20 borx bg-stone-300">
-  <div class="borx text-xl font-semibold">
-    Article List
+<main class="flexcol h-100 p20">
+  <div class="text-xl font-semibold">Article List</div>
+  <div class="flex">
+    <!-- by category, by dates, by author -->
   </div>
-  <div class="flex borx">
-    by category,
-    by dates,
+  <div class="flex mb-3">
+    <form>
+      <select class="borx3 p5 br5 plr10 fs16 fg1 bg-transparent">
+        <option *ngFor="let cat of dropdownCategory">{{cat}}</option>
+      </select>
+    </form>
+    <div class="card flex justify-content-center">
+
+    </div>
   </div>
-  <div class="flex fg1 borx">
-    article data lis
+  <div class="flexcol fg1 overflow-auto">
+    <div class=" w100 p20 br10 bg-[#EDEADE] drop-shadow-[3px_3px_8px_rgba(0,0,0,.5)] borx3">
+      <table
+        class="w100 bg-[#EDEADE]"
+      >
+      <tr>
+        <th *ngFor="let thead of tableHeaders">
+          {{ thead }}
+        </th>
+      </tr>
+      <tr *ngFor="let tdata of tableData; let i = index">
+        <td>
+          {{ i + 1 }}
+        </td>
+        <td>
+          {{ tdata.title }}
+        </td>
+        <td>{{ tdata.authorFirstName }} {{ tdata.authorLastName }}</td>
+        <td>
+          {{ tdata.calculatedDate }}
+        </td>
+        <td>
+          {{ tdata.shortContent }}
+        </td>
+        <td>
+          <a
+            class="underline"
+            [routerLink]="['/', 'dashboard']"
+            [queryParams]="{ page: 'detailArticle', newsId: tdata.articleId }"
+          >
+            Details
+          </a>
+        </td>
+      </tr>
+      </table>
+    </div>
   </div>
-  <div class="flex borx">
-    pagination
+  <div class="flexmid">
+    <div class="flex">
+      <div
+        class="flexmid h-8 w-8 mx-1 cup"
+        (click)="paginationDirection(true)"
+      >
+        <mat-icon aria-label="keyboard_arrow_left" >keyboard_arrow_left</mat-icon>
+      </div>
+      <div
+        class="flexmid h-8 w-8 mx-1 cup bg-[#EDEADE] drop-shadow-[1px_1px_3px_rgba(0,0,0,.5)] borx3 br4"
+        *ngFor="let pgn of paginationLoop"
+        [ngClass]="pgn.select ? 'bg-[#CDCABE]' : ''"
+        (click)="getPaginationData(pgn.id)"
+      >
+        {{ pgn.id }}
+      </div>
+      <div
+        class="flexmid h-8 w-8 mx-1 cup "
+        (click)="paginationDirection(false)"
+      >
+        <mat-icon aria-label="keyboard_arrow_left" >keyboard_arrow_right</mat-icon>
+      </div>
+    </div>
   </div>
 </main>

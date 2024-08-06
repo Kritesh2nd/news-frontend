@@ -13,12 +13,23 @@
         data-name="create article"
         *ngIf="dashPage == 'createArticle'"
       >
-        <app-article-create></app-article-create>
+        <app-article-create pageType="createArticle"></app-article-create>
       </div>
 
       <!-- read article -->
-      <div class="" data-name="read article" *ngIf="dashPage == 'readArticle'">
+      <div class="" data-name="read article"  *ngIf="dashPage == 'readArticle'">
         <app-article-read></app-article-read>
+      </div>
+
+      <!-- detail article -->
+      <div class="" data-name="detail article" *ngIf="dashPage == 'detailArticle'">
+        <app-article-create pageType="detailArticle"></app-article-create>
+      </div>
+
+
+      <!-- update article -->
+      <div class="" data-name="update article" *ngIf="dashPage == 'updateArticle'">
+        <app-article-create pageType="updateArticle"></app-article-create>
       </div>
     </div>
   </section>
