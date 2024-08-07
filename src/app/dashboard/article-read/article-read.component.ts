@@ -76,9 +76,10 @@ export class ArticleReadComponent implements OnInit {
     this.fetchArticleTitleList(this.pageNumber,this.pageCount).subscribe({
       next: (data: Article[]) => {
         this.tableData = data;
-        console.log("this.tableData",this.tableData);
       },
-      error: (error) => { console.log("error in article-read:", error); }
+      error: (error) => { 
+        console.log("error:", error); 
+      }
     });
   }
 
@@ -101,7 +102,6 @@ export class ArticleReadComponent implements OnInit {
     .getArticleCount()
     .subscribe({
       next: (data) => {
-        console.log("count",data);
         this.totalArticleCount = data;
         this.runPaginationLoop()
       },
@@ -152,7 +152,6 @@ export class ArticleReadComponent implements OnInit {
     this.categoryService.getCategoryList('http://localhost:8080/category/list')
     .subscribe({
       next:(data: Category[]) => {
-        console.log("data category",data);
         this.dropdownCategory = data.map(category => category.categoryName);
         
         let tempAuthor = this.requestArticleType.value.author;
@@ -168,7 +167,6 @@ export class ArticleReadComponent implements OnInit {
   }
 
   formOnSubmit():void{
-    console.log(this.requestArticleType.value);
     this.getArticleData();
   }
 

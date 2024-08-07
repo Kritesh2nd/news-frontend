@@ -67,15 +67,7 @@ export class AuthComponent{
       email: this.authForm.value.email,
       password: this.authForm.value.password,
     } 
-
     this.loginUser(userData as UserLogin);
-
-    // if(this.validCheck.email && this.validCheck.password){
-    //   console.log("user logged in", this.token);
-    // }
-    // else{
-    //   console.log("please input valid user credentials");
-    // }
   }
 
   manageSignUp():void{
@@ -88,11 +80,8 @@ export class AuthComponent{
       email: this.authForm.value.email,
       password: this.authForm.value.password,
     } 
-
-    console.log("sign up ", this.validCheck);
   
     if(this.validCheck.firstName && this.validCheck.lastName && this.validCheck.email && this.validCheck.password){
-      console.log("user account created");
       this.sigupUser(userData as UserSignUp);
     }
     else{
@@ -105,7 +94,6 @@ export class AuthComponent{
   }
 
   onInput(){
-    console.log(this.authForm.value);
     this.authFormValidate("email");
     this.authFormValidate("password");  
   }
@@ -138,15 +126,14 @@ export class AuthComponent{
         const validate = emailPattern.test(email);
         this.validCheck.email = validate;
         this.errorMessage.email = validate? "" : "invalid email";
-        console.log("email validate",validate);
       }
       break;
 
       case "password" : {
-        const minLength = 8; // Minimum length requirement
-        const hasUpperCase = /[A-Z]/; // At least one uppercase letter
-        const hasLowerCase = /[a-z]/; // At least one lowercase letter
-        const hasDigit = /\d/; // At least one digit
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/;
+        const hasLowerCase = /[a-z]/;
+        const hasDigit = /\d/;
         const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
         const password: string = this.authForm.value.password ? this.authForm.value.password : "";
         
@@ -165,20 +152,14 @@ export class AuthComponent{
     }
   }
 
-  extractPayload(token: string): any {
-  
-  }
-
   loginUser(userInfo: UserLogin) {
     this.usersService.userLogin(`http://localhost:8080/login`, userInfo)
       .subscribe({
         next: (data) => {
-          console.log(data);
           if(data){
             const decodedJWT = JSON.parse(window.atob(data.token.split('.')[1]));
             localStorage.setItem('jwt_token',data.token);
             // console.log(decodedJWT.roles);
-            // console.log(decodedJWT.sub);
             this.authForm.reset();
             this.navigateToDashboard();
           }
@@ -191,12 +172,10 @@ export class AuthComponent{
   }
 
   sigupUser(userInfo: UserSignUp): void{
-    console.log("sigupUser(userInfo: UserSignUp): void{",userInfo);
     this.usersService.userSignUp('http://localhost:8080/signup',userInfo)
     .subscribe({
       next: (data) => {
         console.log("data",data);
-        // this.navigateToLogin();
       },
       error: (error) => {
         console.log("user signup",error);
@@ -205,15 +184,11 @@ export class AuthComponent{
   }
 
   navigateToLogin(): void {
-    console.log("navigate 1");
     this.router.navigate(['/','auth']);
     this.authSignIn = false;
-    // showPassword: boolean = true;
-
   }
 
   navigateToDashboard(): void {
-    console.log("navigate 2");
     this.router.navigate(['/', 'dashboard'], {
       queryParams: {
         page: 'readArticle',

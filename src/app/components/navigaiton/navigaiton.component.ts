@@ -104,7 +104,6 @@ export class NavigaitonComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.router.url, "url chek");
     this.categoryService.getCategoryList('http://localhost:8080/category/list')
     .subscribe({
       next:(data: Category[]) => {
@@ -116,8 +115,6 @@ export class NavigaitonComponent implements OnInit{
     })
 
     this.fetchSearchResult();
-
-    
   }
 
 
@@ -127,7 +124,6 @@ export class NavigaitonComponent implements OnInit{
   }
 
   navigateToDashboard(){
-    console.log("navigate 6");
     this.router.navigate(['/', 'dashboard'], {
       queryParams: {
         page: 'readArticle',

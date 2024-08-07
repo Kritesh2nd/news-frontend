@@ -17,7 +17,7 @@ import { catchError, Observable, of } from 'rxjs';
   templateUrl: './latest-articles.component.html',
   styleUrl: './latest-articles.component.scss'
 })
-export class LatestArticlesComponent implements OnInit, AfterViewInit{
+export class LatestArticlesComponent implements AfterViewInit{
   
   latestArticlesList: Article[] = [];
 
@@ -54,27 +54,11 @@ export class LatestArticlesComponent implements OnInit, AfterViewInit{
       next: (data: Article[]) => {
         this.latestArticlesList = [...data];
       },
-      error: (error) => {console.log(error);}
+      error: (error) => {
+        console.log(error);
+      }
     });
     
-  }
-
-  ngOnInit(): void {
-
-
-    
-    // this.fetchArticleImageMiniList(0,10).subscribe({
-    //   next: (data: Article[]) => {
-    //     this.latestArticlesList = [...data];
-    //   },
-    //   error: (error) => {console.log(error);}
-    // });
-
-    // this.fetchArticleMiniById(9).subscribe({
-    //   next: (data: Article) => {this.choosenArticle = data;},
-    //   error: (error) => {console.log(error);}
-    // });
-
   }
 
   generateUUID(): string {

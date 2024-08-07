@@ -28,7 +28,6 @@ export class CategoryNewsComponent {
     return this.articlesService.getArticleList('http://localhost:8080/article/listMiniImage?category='+category+'&pagination=true&pageNumber='+pageNumber+'&pageSize='+pageSize)
       .pipe(
         catchError((error) => {
-          console.log(error);
           return of([]);
         })
       );
@@ -45,7 +44,6 @@ export class CategoryNewsComponent {
     this.route.queryParamMap.subscribe(params => {
       const category = params.get('value');
       this.category = category ? category : this.navigateToHomePage();
-      console.log("category",category,"this.category",this.category,"|");
       
       this.fetchArticleImageMiniListNew();
     });
@@ -55,7 +53,6 @@ export class CategoryNewsComponent {
   }
 
   navigateToHomePage(): string {
-    console.log("navigate 3");
     this.router.navigate(['/']);
     return "";
   }

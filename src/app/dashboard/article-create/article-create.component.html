@@ -50,13 +50,21 @@
         <label
           for="title"
           class="formLable flex aic p5 pl16 fs16 bor w-[180px]"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5a5a5a]  formLable-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle'
+              ? 'text-[#5a5a5a]  formLable-detail'
+              : ''
+          "
           >Tile</label
         >
         <input
           type="text"
           class="formInput formName p7 plr10 fs16 fg1 bg-transparent"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5a5a5a]  formInput-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle'
+              ? 'text-[#5a5a5a]  formInput-detail'
+              : ''
+          "
           formControlName="title"
           placeholder="article name..."
         />
@@ -66,13 +74,19 @@
         <label
           for="shortContent"
           class="formLable flex aic p5 pl16 fs16 bor w-[180px]"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5a5a5a]  formLable-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle'
+              ? 'text-[#5a5a5a]  formLable-detail'
+              : ''
+          "
           >Sub Heading</label
         >
         <input
           type="text"
           class="formInput formName p7 plr10 fs16 fg1 bg-transparent"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''
+          "
           formControlName="shortContent"
           placeholder="article sub heading..."
         />
@@ -82,12 +96,18 @@
         <label
           for="category"
           class="formLable flex aic p5 pl16 fs16 bor w-[180px]"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5a5a5a]  formLable-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle'
+              ? 'text-[#5a5a5a]  formLable-detail'
+              : ''
+          "
           >Category</label
         >
         <select
           class="formInput formName p7 plr10 fs16 fg1 bg-transparent"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''
+          "
           name="category"
           formControlName="category"
         >
@@ -113,69 +133,87 @@
         <label
           for="content"
           class="formLable flex pt10 p5 pl16 fs16 bor w-[180px]"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5a5a5a] formLable-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle' ? 'text-[#5a5a5a] formLable-detail' : ''
+          "
           >Content</label
         >
         <textarea
           class="resize-none formInput formName p7 plr10 fs16 fg1 bg-transparent h-[160px]"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''
+          "
           formControlName="content"
           placeholder="article content..."
         ></textarea>
       </div>
 
-      <div class="flex bor mb-5 ">
+      <div class="flex bor mb-5">
         <label
           for="imageUrl"
           class="formLable flex aic p5 pl16 fs16 bor w-[180px]"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5a5a5a]  formLable-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle'
+              ? 'text-[#5a5a5a]  formLable-detail'
+              : ''
+          "
           >Image</label
         >
         <input
           type="file"
           class="formInput formName p7 plr10 fs16 fg1 bg-transparent"
-          [ngClass]="pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''"
+          [ngClass]="
+            pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''
+          "
           (change)="onFileSelected($event)"
         />
       </div>
-      
       <div class="flex">
-        <a
-          [routerLink]="['/', 'dashboard']"
-          [queryParams]="{ page: 'updateArticle', newsId: newsId }"
-          class="ptb8 plr20 borx2 bgprimary br3 colw fs15 cup mt10"
-          *ngIf="pageType == 'detailArticle'"
-        >
-          Update Article
-        </a>
-
-        <div
-          class="ptb8 plr20 borx2 bgdanger br3 colw fs15 cup mt10 ml16"
-          *ngIf="pageType == 'detailArticle'"
-          (click)="deleteActivate()"
-        >
-          Delete
+        
+        <!-- create page button -->
+        <div class="" *ngIf="pageType == 'createArticle'">
+          <button
+            class="ptb6 plr20 borx2 bgprimary br3 colw fs15 cup mt10"
+            type="submit"
+          >
+            Upload
+          </button>
         </div>
-        <button
-          class="ptb6 plr20 borx2 bgprimary br3 colw fs15 cup mt10"
-          type="submit"
-          *ngIf="pageType !== 'detailArticle'"
-        >
-          <ng-container *ngIf="pageType == 'createArticle'"
-            >Upload</ng-container
+
+        <!-- detail page button -->
+        <div class="flex" *ngIf="pageType == 'detailArticle'">
+          <a
+            [routerLink]="['/', 'dashboard']"
+            [queryParams]="{ page: 'updateArticle', newsId: newsId }"
+            class="ptb8 plr20 borx2 bgprimary br3 colw fs15 cup mt10"
           >
-          <ng-container *ngIf="pageType == 'updateArticle'"
-            >Update</ng-container
+            Update Article
+          </a>
+          <div
+            class="ptb8 plr20 borx2 bgdanger br3 colw fs15 cup mt10 ml16"
+            (click)="deleteActivate()"
           >
-        </button>
-        <a
-          [routerLink]="['/', 'dashboard']"
-          [queryParams]="{ page: 'detailArticle', newsId: newsId }"
-          class="ptb6 plr20 borx2 bgprimary br3 colw fs15 cup mt10 ml16"
-          *ngIf="pageType == 'updateArticle'"
-        >
-          Cancel
-        </a>
+            Delete
+          </div>
+        </div>
+
+        <!-- update page button -->
+        <div class="" *ngIf="pageType == 'updateArticle'">
+          <button
+            class="ptb6 plr20 borx2 bgprimary br3 colw fs15 cup mt10"
+            type="submit"
+          >
+            Update
+          </button>
+          <a
+            [routerLink]="['/', 'dashboard']"
+            [queryParams]="{ page: 'detailArticle', newsId: newsId }"
+            class="ptb6 plr20 borx2 bgprimary br3 colw fs15 cup mt10 ml16"
+            *ngIf="pageType == 'updateArticle'"
+          >
+            Cancel
+          </a>
+        </div>
       </div>
     </form>
   </div>

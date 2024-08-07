@@ -7,14 +7,12 @@ export const jwtInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: H
   }
   
   let tokenData: string | null = null;
-  // let validToken: boolean = false;
 
   if (typeof localStorage !== 'undefined') {
     tokenData = localStorage.getItem('jwt_token');
   }
 
   if (tokenData) {
-    console.log("tokenData", tokenData);
     try {
       if (tokenData) {
         const modifiedReq = req.clone({

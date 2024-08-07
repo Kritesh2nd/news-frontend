@@ -52,14 +52,16 @@ export class DetailsComponent implements OnInit {
   }
 
   navigateToHomePage(): number {
-    console.log("navigate 5");
     this.router.navigate(['/']);
     return 0;
   }
   
   fetchArticleMiniByIdNew():void{
     this.fetchArticleMainById(this.newsId).subscribe({
-      next: (data: Article) => {this.articleDetail = data;},
+      next: (data: Article) => {
+        console.log("article details",data);
+        this.articleDetail = data;
+      },
       error: (error) => {console.log(error);}
     });
 

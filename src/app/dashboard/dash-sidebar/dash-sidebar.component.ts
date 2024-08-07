@@ -27,7 +27,6 @@ export class DashSidebarComponent implements OnInit{
 
 
   navigateToDashboard(param:string):void {
-    console.log("navigate 10");
     this.router.navigate(['/', 'dashboard'], {
       queryParams: {
         page: param,
@@ -38,7 +37,6 @@ export class DashSidebarComponent implements OnInit{
 
   LogOut(): void{
     localStorage.removeItem("jwt_token");  
-    console.log("navigate 11");
     this.router.navigate(['/']);
   } 
 }

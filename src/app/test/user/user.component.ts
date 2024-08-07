@@ -23,7 +23,7 @@ export class UserComponent {
       .getUsers('http://localhost:8080/user/list')
       .subscribe({
         next: (data: User[]) => {
-          // console.log("user",data)
+          console.log("data",data);
         },
         error: (error) => {
           console.log(error);
