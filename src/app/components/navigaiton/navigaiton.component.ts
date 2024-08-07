@@ -127,7 +127,12 @@ export class NavigaitonComponent implements OnInit{
   }
 
   navigateToDashboard(){
-    this.router.navigate(['/','dashboard']);
+    console.log("navigate 6");
+    this.router.navigate(['/', 'dashboard'], {
+      queryParams: {
+        page: 'readArticle',
+      }
+    });
   }
 
   generateUUID(): string {

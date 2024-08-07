@@ -1,16 +1,17 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { Article, Category } from '../../../types';
 import { catchError, Observable, of } from 'rxjs';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ArticlesService } from '../../services/articles.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { DropdownModule } from 'primeng/dropdown';
 import { MaterialModule } from '../../utils/material/material.module';
 import { CategoryService } from '../../services/category.service';
+import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
 
 
 interface Pagi {
@@ -24,7 +25,10 @@ interface Pagi {
     NgFor, NgIf, NgClass,
     RouterOutlet, RouterModule,
     FormsModule, DropdownModule,
+    ReactiveFormsModule,
     MaterialModule,
+    DatePipe,
+    CapitalizeFirstPipe,
   ],
   templateUrl: './article-read.component.html',
   styleUrl: './article-read.component.scss'
@@ -42,22 +46,30 @@ export class ArticleReadComponent implements OnInit {
   paginationLoop:Pagi[] = []
   
 
-  dropdownCategory: string[] = [];
+  dropdownCategory: any[] = [];
   dropdownAuthor: string[] = [];
 
+  requestArticleType = this.formBuilder.group({
+    category:"",
+    author:"",
+  })
   
 
   constructor(
     private categoryService: CategoryService, 
-    private articleService: ArticlesService
+    private articleService: ArticlesService,
+    private formBuilder: FormBuilder, 
   ) { }
 
   ngOnInit(): void {
     this.getArticleData()
 
-    this.runPaginationLoop();
+    // this.runPaginationLoop();
+    this.setTotalArticleCount();
 
     this.getCategoryList();
+
+    
   }
 
   getArticleData() {
@@ -71,7 +83,11 @@ export class ArticleReadComponent implements OnInit {
   }
 
   fetchArticleTitleList(pageNumber: number, pageSize: number): Observable<Article[]> {
-    return this.articleService.getArticleList('http://localhost:8080/article/listMain?pagination=true&pageNumber=' + pageNumber + '&pageSize=' + pageSize)
+    let newUrl = 'http://localhost:8080/article/listMain?pagination=true&pageNumber=' + pageNumber + '&pageSize=' + pageSize
+    if(this.requestArticleType.value.category !== "none"){
+      newUrl = 'http://localhost:8080/article/listMain?category='+this.requestArticleType.value.category+'&pagination=true&pageNumber=' + pageNumber + '&pageSize=' + pageSize
+    }
+    return this.articleService.getArticleList(newUrl)
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -80,9 +96,20 @@ export class ArticleReadComponent implements OnInit {
       );
   }
 
-  getTotalArticle():number{
-    const totalActicleCount = 13;
-    return totalActicleCount;
+  setTotalArticleCount(){
+    this.articleService
+    .getArticleCount()
+    .subscribe({
+      next: (data) => {
+        console.log("count",data);
+        this.totalArticleCount = data;
+        this.runPaginationLoop()
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    })
+    
   }
 
   getPaginationData(pageNum: number):void{
@@ -95,7 +122,6 @@ export class ArticleReadComponent implements OnInit {
   }
 
   handelPaginationCount():void{
-    this.totalArticleCount = this.getTotalArticle();
     const temp = this.totalArticleCount / this.pageCount;
     this.paginationCount = temp%1 !== 0 ? Math.ceil(temp) : temp;
   }
@@ -128,13 +154,25 @@ export class ArticleReadComponent implements OnInit {
       next:(data: Category[]) => {
         console.log("data category",data);
         this.dropdownCategory = data.map(category => category.categoryName);
-        console.log(this.dropdownCategory);
+        
+        let tempAuthor = this.requestArticleType.value.author;
+        this.requestArticleType = this.formBuilder.group({
+          category:"none",
+          author:tempAuthor?tempAuthor:"",
+        });
       },
       error: (error) => {
         console.log(error);
       },
     })
   }
+
+  formOnSubmit():void{
+    console.log(this.requestArticleType.value);
+    this.getArticleData();
+  }
+
+  
 
   getAuthorList():void{
     

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Link, LinkParamterts, sideBar } from '../../../types';
+import { Link, sideBar } from '../../../types';
 import { NgFor, NgIf } from '@angular/common';
-import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-dash-sidebar',
@@ -22,29 +22,23 @@ export class DashSidebarComponent implements OnInit{
     this.sideBar = sideBar;
   }
   ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        
-        const aa = event.url.includes('dashboard');
-        
-        const bb = event.url.includes('add');
-        console.log(aa,bb);
+    
+  }
 
+
+  navigateToDashboard(param:string):void {
+    console.log("navigate 10");
+    this.router.navigate(['/', 'dashboard'], {
+      queryParams: {
+        page: param,
       }
     });
   }
 
-  // mangaeLinkParams(params?: LinkParamterts[]): any{
-  //   let cat: any;
-  //   console.log(params);
-  //   cat.setK
-  //   cat = {
-      
-  //   }
-  // }
 
   LogOut(): void{
     localStorage.removeItem("jwt_token");  
+    console.log("navigate 11");
     this.router.navigate(['/']);
   } 
 }

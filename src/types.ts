@@ -64,7 +64,7 @@ export interface Article{
   shortContent?: string,
   content?: string,
   imageUrl?: string,
-  calculatedDate?: string,
+  publishedDate?: string,
   category?:string,
 }
 
@@ -116,7 +116,7 @@ export const dummyArticle: Article = {
   shortContent: '',
   content: '',
   imageUrl: '',
-  calculatedDate: ''
+  publishedDate: ''
 }
 
 
@@ -192,8 +192,8 @@ export interface CreateArticle {
   articleId?: number,
   title: string,
   shortContent: string,
-  imageUrl?: string,
-  content: string,
+  content?: string,
+  publishedDate?: string,
   category: string,
 }
 

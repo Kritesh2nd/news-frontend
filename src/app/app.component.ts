@@ -72,10 +72,6 @@ export class AppComponent implements OnInit {
   }
 
 
-  navigateToHomePage() {
-    this.router.navigate(['/']);
-  }
-
 }
 
 /*

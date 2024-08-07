@@ -18,7 +18,7 @@ import { catchError, Observable, of } from 'rxjs';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent{
 
   authSignIn: boolean = true;
   showPassword: boolean = false;
@@ -37,9 +37,6 @@ export class AuthComponent implements OnInit {
     password:'password',
   })
 
-  ngOnInit(): void {
-    
-  }
 
   validCheck = {
     firstName:false,
@@ -73,13 +70,12 @@ export class AuthComponent implements OnInit {
 
     this.loginUser(userData as UserLogin);
 
-    if(this.validCheck.email && this.validCheck.password){
-     
-      console.log("user logged in", this.token);
-    }
-    else{
-      console.log("please input valid user credentials");
-    }
+    // if(this.validCheck.email && this.validCheck.password){
+    //   console.log("user logged in", this.token);
+    // }
+    // else{
+    //   console.log("please input valid user credentials");
+    // }
   }
 
   manageSignUp():void{
@@ -104,21 +100,8 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  // managePasswordType(): string{
-  //   this.showPassword = !this.showPassword;
-  //   return !this.showPassword?"text":"password";
-  // }
-
-  // suggested change
-  // when using suggested change on html template ince showPasword value will determine value
-
   managePasswordType(){
     this.showPassword = !this.showPassword;
-  }
-  
-  navigateToHomePage(): number {
-    this.router.navigate(['/','dashboard']);
-    return 0;
   }
 
   onInput(){
@@ -222,6 +205,7 @@ export class AuthComponent implements OnInit {
   }
 
   navigateToLogin(): void {
+    console.log("navigate 1");
     this.router.navigate(['/','auth']);
     this.authSignIn = false;
     // showPassword: boolean = true;
@@ -229,7 +213,12 @@ export class AuthComponent implements OnInit {
   }
 
   navigateToDashboard(): void {
-    this.router.navigate(['/','dashboard']);
+    console.log("navigate 2");
+    this.router.navigate(['/', 'dashboard'], {
+      queryParams: {
+        page: 'readArticle',
+      }
+    });
   }
   
 }

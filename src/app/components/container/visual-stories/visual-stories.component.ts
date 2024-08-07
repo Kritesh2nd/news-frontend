@@ -47,6 +47,7 @@ export class VisualStoriesComponent implements OnInit{
   }
 
   navigateToOfflinePage(): void {
+    console.log("navigate 4");
     this.router.navigate(['/','offline']);
   }
 

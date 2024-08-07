@@ -31,6 +31,35 @@ export class ArticlesService {
     );
   };
 
+  getArticleCount = (): Observable<number> => {
+    return this.apiService.get("http://localhost:8080/article/count", {
+      headers:{
+        contentType:'application/json'
+      },
+      responseType: 'json'
+    }
+    );
+  };
+
+  deleteArticleById = (url: string): Observable<Article> => {
+    return this.apiService.post(url, {
+      headers:{
+        contentType:'application/json'
+      },
+      responseType: 'json'
+    }
+    );
+  };
+
+  createArticleImage = (apiUrl: string, data: CreateArticle, file: File): Observable<any> => {
+    const formData: FormData = new FormData();
+    formData.append('img', file, file.name);
+    formData.append('form', new Blob([JSON.stringify(data)], {
+      type: 'application/json'
+    }));
+    return this.apiService.post<any>(apiUrl, formData);
+  }
+
   createArticle = (url: string, body: CreateArticle): Observable<any> => {    
     return this.apiService.post<any>(url, body);  
   };

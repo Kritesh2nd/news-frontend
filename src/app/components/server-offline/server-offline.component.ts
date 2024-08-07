@@ -36,6 +36,7 @@ export class ServerOfflineComponent implements OnInit{
   }
 
   navigateToHomePage(): void {
+    console.log("navigate 7");
     this.router.navigate(['/']);
   }
 

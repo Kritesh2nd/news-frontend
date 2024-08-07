@@ -3,9 +3,19 @@
   border:1px solid #3a3a3a;
   background:#FFF5EE;
 }
+.formLable-detail{
+  border:1px solid #999;
+}
 .formInput{
   border-radius:0 10px 10px 0;
   border:1px solid #3a3a3a;
   border-left:none;
   background:#FFF5EE;
+}
+.formInput-detail{
+  border:1px solid #999;
+  border-left:none;
+}
+.transparentBg{
+  background-color: rgba($color: #1a1a1a, $alpha: .7);
 }

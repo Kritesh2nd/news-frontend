@@ -55,6 +55,7 @@ export class CategoryNewsComponent {
   }
 
   navigateToHomePage(): string {
+    console.log("navigate 3");
     this.router.navigate(['/']);
     return "";
   }

@@ -52,6 +52,7 @@ export class DetailsComponent implements OnInit {
   }
 
   navigateToHomePage(): number {
+    console.log("navigate 5");
     this.router.navigate(['/']);
     return 0;
   }

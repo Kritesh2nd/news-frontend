@@ -4,10 +4,16 @@
     <!-- by category, by dates, by author -->
   </div>
   <div class="flex mb-3">
-    <form>
-      <select class="borx3 p5 br5 plr10 fs16 fg1 bg-transparent">
-        <option *ngFor="let cat of dropdownCategory">{{cat}}</option>
-      </select>
+    <form class="w100 flex jcfe" [formGroup]="requestArticleType">
+      <div class="flex bor">
+        <label class="flexmid pr-4 font-semibold" for="category">
+          Category
+        </label>
+        <select class="borx3 p5 br5 plr10 fs16 fg1 bg-transparent" formControlName="category" (click)="formOnSubmit()">
+          <option value="none" selected>All</option>
+          <option *ngFor="let cat of dropdownCategory" [value]="cat">{{cat | capitalizeFirst}}</option>
+        </select>
+      </div>
     </form>
     <div class="card flex justify-content-center">
 
@@ -32,7 +38,7 @@
         </td>
         <td>{{ tdata.authorFirstName }} {{ tdata.authorLastName }}</td>
         <td>
-          {{ tdata.calculatedDate }}
+          {{ tdata.publishedDate | date }}
         </td>
         <td>
           {{ tdata.shortContent }}
@@ -61,7 +67,7 @@
       <div
         class="flexmid h-8 w-8 mx-1 cup bg-[#EDEADE] drop-shadow-[1px_1px_3px_rgba(0,0,0,.5)] borx3 br4"
         *ngFor="let pgn of paginationLoop"
-        [ngClass]="pgn.select ? 'bg-[#CDCABE]' : ''"
+        [ngClass]="pgn.select ? 'bg-[#ADAA9E]' : ''"
         (click)="getPaginationData(pgn.id)"
       >
         {{ pgn.id }}

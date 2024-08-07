@@ -29,15 +29,18 @@ export class DashboardMainComponent implements OnInit{
     if(!data){
       this.navigateToHomePage();
     }
-    console.log(data);
+    // console.log(data);
 
     this.route.queryParamMap.subscribe(params => {
       const dashPage = params.get('page');
       this.dashPage = dashPage as string;
     });
+    console.log(this.dashPage)
   }
 
   navigateToHomePage() {
+    console.log("from jwt redirect");
+    console.log("navigate 12");  
     this.router.navigate(['/']);
   }
   
