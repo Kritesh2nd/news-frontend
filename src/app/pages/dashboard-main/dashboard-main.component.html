@@ -6,7 +6,7 @@
 
   <!-- dashboard component -->
   <section class="w80 bor bor">
-    <div class="flexcol bor hw100 overflow-auto ">
+    <div class="flexcol bor hw100 overflow-auto">
       <!-- create article -->
       <div
         class=""
@@ -17,18 +17,25 @@
       </div>
 
       <!-- read article -->
-      <div class="" data-name="read article"  *ngIf="dashPage === 'readArticle'">
-        <app-article-read > </app-article-read>
+      <div class="" data-name="read article" *ngIf="dashPage === 'readArticle'">
+        <app-article-read> </app-article-read>
       </div>
 
       <!-- detail article -->
-      <div class="" data-name="detail article" *ngIf="dashPage === 'detailArticle'">
+      <div
+        class=""
+        data-name="detail article"
+        *ngIf="dashPage === 'detailArticle'"
+      >
         <app-article-create pageType="detailArticle"></app-article-create>
       </div>
 
-
       <!-- update article -->
-      <div class="" data-name="update article" *ngIf="dashPage === 'updateArticle'">
+      <div
+        class=""
+        data-name="update article"
+        *ngIf="dashPage === 'updateArticle'"
+      >
         <app-article-create pageType="updateArticle"></app-article-create>
       </div>
     </div>

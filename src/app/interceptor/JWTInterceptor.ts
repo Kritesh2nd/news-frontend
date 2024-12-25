@@ -1,12 +1,16 @@
 import { HttpEvent, HttpInterceptorFn, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
-export const jwtInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
+export const jwtInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<any>, next: HttpHandlerFn
+): Observable<HttpEvent<any>> => {
+
+  let tokenData: string | null = null;
+
   if (req.url.includes('/login')) {
     return next(req);
   }
-  
-  let tokenData: string | null = null;
 
   if (typeof localStorage !== 'undefined') {
     tokenData = localStorage.getItem('jwt_token');
@@ -22,8 +26,14 @@ export const jwtInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: H
         });
         return next(modifiedReq);
       }
+      else{
+        
+      }
     } catch (e) {
-      console.error('Error parsing token data', e);
+      localStorage.removeItem('jwt_token');
+        console.error('Error parsing token data');
+        new Router().navigate(['/']);
+      // ToastRef.call.bind.apply.toString.prototype;
     }
   }
 

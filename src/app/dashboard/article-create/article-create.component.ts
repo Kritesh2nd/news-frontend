@@ -1,13 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { DashSidebarComponent } from '../dash-sidebar/dash-sidebar.component';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Article, Category, CreateArticle } from '../../../types';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
 import { ArticlesService } from '../../services/articles.service';
 import { catchError, Observable, of } from 'rxjs';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-article-create',
@@ -19,6 +21,7 @@ import { catchError, Observable, of } from 'rxjs';
     NgFor, NgIf, NgClass,
     ReactiveFormsModule,
     RouterOutlet, RouterModule,
+
   ],
   templateUrl: './article-create.component.html',
   styleUrl: './article-create.component.scss'
@@ -61,7 +64,8 @@ export class ArticleCreateComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private categoryService: CategoryService,
-    private articleService: ArticlesService
+    private articleService: ArticlesService,
+    private toastr: ToastrService,
   ) { }
 
   articleDataForm = this.formBuilder.group({
@@ -86,12 +90,17 @@ export class ArticleCreateComponent implements OnInit {
     }
   }
 
-
   onSubmit(): void {
-    this.createArticle = this.articleDataForm.value as CreateArticle;
-    this.createArticleImageUrl(this.createArticle)
-    // this.createArticleUrl(this.createArticle);
-    this.articleDataForm.reset();
+    if (this.articleDataForm.valid && this.selectedFile != null) {
+      console.log("subimityes");
+      this.createArticle = this.articleDataForm.value as CreateArticle;
+      this.createArticleImageUrl(this.createArticle)
+      this.articleDataForm.reset();
+      this.selectedFile = null;
+    }
+    else {
+      this.showFailed("Please fill all the input fields")
+    }
   }
 
   createArticleImageUrl(articleData: CreateArticle): void {
@@ -107,46 +116,43 @@ export class ArticleCreateComponent implements OnInit {
     const addUrl = 'http://localhost:8080/article/add';
     const updateUrl = 'http://localhost:8080/article/update';
     let finalUrl = "";
-    if (this.pageType == 'createArticle') { finalUrl = addUrl; }
-    else if (this.pageType == 'updateArticle') { finalUrl = updateUrl; }
+    let toastMessage = "";
+    if (this.pageType == 'createArticle') {
+      finalUrl = addUrl;
+      toastMessage = "Article created successfully";
+    }
+    else if (this.pageType == 'updateArticle') {
+      finalUrl = updateUrl;
+      toastMessage = "Article updated successfully";
+    }
     if (this.selectedFile) {
       this.articleService
         .createArticleImage(finalUrl, articleDataSave as CreateArticle, this.selectedFile)
         .subscribe({
           next: (data) => {
-            console.log("data", data);
+            console.log("article create data", data);
+            if (data != null && data.success) {
+              this.showSuccess(toastMessage);
+
+              if (this.pageType == 'createArticle') {
+                this.navigateToReadArticle();
+              }
+              else if (this.pageType == 'updateArticle') {
+                this.navigateToDetailArticle(articleDataSave.articleId);
+              }
+
+            }
+            else {
+              this.showFailed("Failed to create article");
+            }
           },
           error: (error) => {
             console.log("error", error);
+            this.showFailed("Failed to create article");
           },
         });
     }
   }
-
-  // createArticleUrl(articleData: CreateArticle): void {
-  //   const articleDataSave = {
-  //     articleId: this.articleDetail.articleId,
-  //     title: articleData.title,
-  //     shortContent: articleData.shortContent,
-  //     content: articleData.content,
-  //     publishedDate: "",
-  //     category: articleData.category,
-  //   }
-  //   const addUrl = 'http://localhost:8080/article/addContent';
-  //   const updateUrl = 'http://localhost:8080/article/update';
-  //   let finalUrl = "";
-  //   if (this.pageType == 'createArticle') { finalUrl = addUrl; }
-  //   else if (this.pageType == 'updateArticle') { finalUrl = updateUrl; }
-  //   this.articleService.createArticle(finalUrl, articleDataSave as CreateArticle)
-  //     .subscribe({
-  //       next: (data) => {
-  //         console.log("data", data);
-  //       },
-  //       error: (error) => {
-  //         console.log("error", error);
-  //       },
-  //     });
-  // }
 
   getCategoryList(): void {
     this.categoryService.getCategoryList('http://localhost:8080/category/list')
@@ -180,24 +186,24 @@ export class ArticleCreateComponent implements OnInit {
       const articleId = params.get('newsId');
 
       this.newsId = articleId ? parseInt(articleId) as number : 0;
-      
-        tempArticleId = this.newsId ? this.newsId : 0;
 
-        this.fetchArticleMainById(tempArticleId).subscribe({
-          next: (data: Article) => {
-            this.articleDetail = data;
+      tempArticleId = this.newsId ? this.newsId : 0;
 
-            this.articleDataForm = this.formBuilder.group({
-              title: [{ value: this.articleDetail.title as string, disabled: inpDisable }],
-              shortContent: [{ value: this.articleDetail.shortContent as string, disabled: inpDisable }],
-              content: [{ value: this.articleDetail.content as string, disabled: inpDisable }],
-              category: [{ value: "sports", disabled: inpDisable }],
-            })
-          },
-          error: (error) => {
-            console.log(error);
-          }
-        });
+      this.fetchArticleMainById(tempArticleId).subscribe({
+        next: (data: Article) => {
+          this.articleDetail = data;
+
+          this.articleDataForm = this.formBuilder.group({
+            title: [{ value: this.articleDetail.title as string, disabled: inpDisable }],
+            shortContent: [{ value: this.articleDetail.shortContent as string, disabled: inpDisable }],
+            content: [{ value: this.articleDetail.content as string, disabled: inpDisable }],
+            category: [{ value: "sports", disabled: inpDisable }],
+          })
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
 
     });
   }
@@ -239,8 +245,26 @@ export class ArticleCreateComponent implements OnInit {
     return 0;
   }
 
+  navigateToDetailArticle(newsId: number): number {
+    this.router.navigate(['/', 'dashboard'], {
+      queryParams: {
+        page: 'detailArticle',
+        newsId: newsId,
+      }
+    });
+    return 0;
+  }
+
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
+  }
+
+  showSuccess(message: string) {
+    this.toastr.success(message, 'Success');
+  }
+
+  showFailed(message: string) {
+    this.toastr.error(message, 'Failed')
   }
 
 }

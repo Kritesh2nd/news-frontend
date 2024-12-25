@@ -9,29 +9,24 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class UsersService {
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
-  // Getting user list from the API
   getUsers = (url: string): Observable<User[]> => {
     return this.apiService.get(url, {
       responseType: 'json',
     });
   };
 
-  // Adding adding user
   userLogin = (url: string, body: any): Observable<TokenResponse> => {
     const credentials = btoa(`${body.email}:${body.password}`);
     const headers = new HttpHeaders({
       'Authorization': `Basic ${credentials}`
     });
-    return this.apiService.post<TokenResponse>(url, {}, { headers });  
+    return this.apiService.post<TokenResponse>(url, {}, { headers });
   };
 
-  userSignUp = (url: string, body: UserSignUp): Observable<any> => {    
-    return this.apiService.post<any>(url, body);  
+  userSignUp = (url: string, body: UserSignUp): Observable<BasicResponse> => {
+    return this.apiService.post<BasicResponse>(url, body);
   };
 
-  
-
-  
 }

@@ -5,6 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'ngx-toastr/toastr';
 
 .imageContainer{
   overflow: hidden;

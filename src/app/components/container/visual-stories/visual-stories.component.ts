@@ -6,7 +6,6 @@ import { catchError, Observable, of } from 'rxjs';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 
-
 @Component({
   selector: 'app-visual-stories',
   standalone: true,
@@ -17,14 +16,14 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './visual-stories.component.html',
   styleUrl: './visual-stories.component.scss'
 })
-export class VisualStoriesComponent implements OnInit{
-  
+export class VisualStoriesComponent implements OnInit {
+
   visualTilteList: Article[] = [];
 
-  constructor(private router: Router,private articlesService: ArticlesService) {}
+  constructor(private router: Router, private articlesService: ArticlesService) { }
 
-  fetchArticleImageTileList(pageNumber:number, pageSize: number): Observable<Article[]> {
-    return this.articlesService.getArticleList('http://localhost:8080/article/listTitleImage?pagination=true&pageNumber='+pageNumber+'&pageSize='+pageSize)
+  fetchArticleImageTileList(pageNumber: number, pageSize: number): Observable<Article[]> {
+    return this.articlesService.getArticleList('http://localhost:8080/article/listTitleImage?pagination=true&pageNumber=' + pageNumber + '&pageSize=' + pageSize)
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -35,9 +34,9 @@ export class VisualStoriesComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.fetchArticleImageTileList(0,4).subscribe({
-      next: (data: Article[]) => {this.visualTilteList = data;},
-      error: (error) => {console.log(error);this.navigateToOfflinePage();}
+    this.fetchArticleImageTileList(0, 4).subscribe({
+      next: (data: Article[]) => { this.visualTilteList = data; },
+      error: (error) => { console.log(error); this.navigateToOfflinePage(); }
     });
 
   }
@@ -47,7 +46,7 @@ export class VisualStoriesComponent implements OnInit{
   }
 
   navigateToOfflinePage(): void {
-    this.router.navigate(['/','offline']);
+    this.router.navigate(['/', 'offline']);
   }
 
 }

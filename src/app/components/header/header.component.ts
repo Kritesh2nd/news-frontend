@@ -12,16 +12,11 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit{
-
-  ngOnInit(): void {
-
-  }
-
+export class HeaderComponent {
   @Output() manageAuthPage = new EventEmitter();
-  
-  manageHeaderAuthPage(){
-    this.manageAuthPage.emit( );
+
+  manageHeaderAuthPage() {
+    this.manageAuthPage.emit();
   }
 
   getFormattedDate = (): string => {
@@ -31,7 +26,7 @@ export class HeaderComponent implements OnInit{
       month: 'long',
       day: 'numeric'
     };
-  
+
     const today = new Date();
     return today.toLocaleDateString('en-US', options);
   };

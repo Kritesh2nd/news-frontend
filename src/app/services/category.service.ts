@@ -8,18 +8,16 @@ import { Category } from '../../types';
 })
 export class CategoryService {
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
-  // Getting products from the API
-  
   getCategoryList = (url: string): Observable<Category[]> => {
     return this.apiService.get(url, {
-      headers:{
-        contentType:'application/json'
+      headers: {
+        contentType: 'application/json'
       },
       responseType: 'json'
     }
     );
   };
-  
+
 }

@@ -10,10 +10,10 @@ import { LatestArticlesComponent } from '../../components/container/latest-artic
   standalone: true,
   imports: [
     HeadlineTitlesComponent, MainContentComponent, VisualStoriesComponent, LatestArticlesComponent,
-],
+  ],
   templateUrl: './general.component.html',
   styleUrl: './general.component.scss'
 })
 export class GeneralComponent {
-  
+
 }

@@ -5,14 +5,11 @@ import { DetailsComponent } from './components/details/details.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { ServerOfflineComponent } from './components/server-offline/server-offline.component';
 import { CategoryNewsComponent } from './components/container/category-news/category-news.component';
-import { ArticleCreateComponent } from './dashboard/article-create/article-create.component';
-import { ArticleReadComponent } from './dashboard/article-read/article-read.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: GeneralComponent,
-    
   },
   {
     path: 'request',
@@ -29,7 +26,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardMainComponent,
-    
+
   },
   {
     path: 'offline',
@@ -40,5 +37,4 @@ export const routes: Routes = [
     component: ErrorPageComponent,
   },
 
-  
 ];

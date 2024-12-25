@@ -1,51 +1,56 @@
-
-.categoryList:hover{color:#fff;text-decoration: underline;}
-input[type="text"]{
-  padding:7px 12px;
-  border-radius:15px;
-  font-size:16px;
+.categoryList:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+input[type="text"] {
+  padding: 7px 12px;
+  border-radius: 15px;
+  font-size: 16px;
   min-width: 300px;
-  width:600px;
+  width: 600px;
 }
 
-.close{
-  height:20px;
-  width:20px;
-  font-size:20px;
+.close {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
 }
 
-.searchResultList{
-  left:0;
-  top:37px;
+.searchResultList {
+  left: 0;
+  top: 37px;
 }
 
-.searchResultTitle{
-  color:#bbb;
-  transition:.2s;
+.searchResultTitle {
+  color: #bbb;
+  transition: 0.2s;
 }
 
-.searchResultTitle:hover{color:#efefef;}
-.searchResultTitle:hover .shortContent{color:#ccc}
-.searchResultTitle:hover .image{
+.searchResultTitle:hover {
+  color: #efefef;
+}
+.searchResultTitle:hover .shortContent {
+  color: #ccc;
+}
+.searchResultTitle:hover .image {
   filter: grayscale(0%);
 }
 
-
-.searchResult.searchImage{
+.searchResult.searchImage {
   -webkit-filter: grayscale(55%);
   filter: grayscale(55%);
-  border:1px solid #ccc;
+  border: 1px solid #ccc;
 }
 
-.searchResultTitleName{
+.searchResultTitleName {
   font-size: 18px;
 }
-.searchResultContent{
+.searchResultContent {
   font-size: 15px;
 }
 
-.moreSearchResult:hover{
+.moreSearchResult:hover {
   text-decoration: underline;
-  color:#fff;
+  color: #fff;
   cursor: pointer;
 }

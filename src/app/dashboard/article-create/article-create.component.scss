@@ -1,21 +1,21 @@
-.formLable{
-  border-radius:10px 0 0 10px;
-  border:1px solid #3a3a3a;
-  background:#FFF5EE;
+.formLable {
+  border-radius: 10px 0 0 10px;
+  border: 1px solid #3a3a3a;
+  background: #fff5ee;
 }
-.formLable-detail{
-  border:1px solid #999;
+.formLable-detail {
+  border: 1px solid #999;
 }
-.formInput{
-  border-radius:0 10px 10px 0;
-  border:1px solid #3a3a3a;
-  border-left:none;
-  background:#FFF5EE;
+.formInput {
+  border-radius: 0 10px 10px 0;
+  border: 1px solid #3a3a3a;
+  border-left: none;
+  background: #fff5ee;
 }
-.formInput-detail{
-  border:1px solid #999;
-  border-left:none;
+.formInput-detail {
+  border: 1px solid #999;
+  border-left: none;
 }
-.transparentBg{
-  background-color: rgba($color: #1a1a1a, $alpha: .7);
+.transparentBg {
+  background-color: rgba($color: #1a1a1a, $alpha: 0.7);
 }

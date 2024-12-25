@@ -33,6 +33,7 @@
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss",
               "src/index.scss"
             ],

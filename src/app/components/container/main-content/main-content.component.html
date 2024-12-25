@@ -1,31 +1,30 @@
 <main class="flex bor">
-
   <!-- left section -->
-  <section class="flexcol main-left flex fg4 fb0 bor ">
+  <section class="flexcol main-left flex fg4 fb0 bor">
     <main class="flexcol mb28 bor" *ngFor="let article of articleMiniList">
-        <a 
-          [routerLink]="['/details']" 
-          [queryParams]="{uuid:generateUUID(),newsId:article.articleId}"
-          class="bor fs18 font-semibold text-stone-800 leading-tight"
+      <a
+        [routerLink]="['/details']"
+        [queryParams]="{ uuid: generateUUID(), newsId: article.articleId }"
+        class="bor fs18 font-semibold text-stone-800 leading-tight"
+      >
+        {{ article.title }}
+      </a>
+      <div class="bor fs13 ff1 ptb5 text-stone-500">
+        By {{ article.authorFirstName }} {{ article.authorLastName }}
+      </div>
+      <div class="flex jcsb bor">
+        <div class="w56 bor fs16 text-stone-800 leading-snug">
+          {{ article.shortContent }}
+        </div>
+        <a
+          class="imageContainer w40 br3 h-[90px]"
+          [routerLink]="['/', 'details']"
+          [queryParams]="{ uuid: generateUUID(), newsId: article.articleId }"
         >
-          {{article.title}}
+          <img class="image ofc hw100 cup br3" [src]="article.imageUrl" />
         </a>
-        <div class="bor fs13 ff1 ptb5 text-stone-500">
-          By {{article.authorFirstName}} {{article.authorLastName}}
-        </div>
-        <div class="flex jcsb bor">
-          <div class="w56 bor fs16 text-stone-800 leading-snug">
-            {{article.shortContent}}
-          </div>
-          <a
-            class="imageContainer w40 br3 h-[90px] "
-            [routerLink]="['/','details']" 
-            [queryParams]="{uuid:generateUUID(),newsId:article.articleId}" 
-          >
-            <img class="image ofc hw100 cup br3" [src]="article.imageUrl"/>
-          </a>
-        </div>
-      </main>
+      </div>
+    </main>
   </section>
 
   <!-- center section -->
@@ -33,21 +32,38 @@
     <span class="center left abs bg-stone-300 h-[100%] w-[1px]"></span>
     <ng-container *ngIf="articleCenterMain">
       <div class="flexcol gap-2 bor">
-        <a 
+        <a
           class="imageContainer bor br3 mb14"
-          [routerLink]="['/','details']" 
-          [queryParams]="{uuid:generateUUID(),newsId:articleCenterMain.articleId}" 
+          [routerLink]="['/', 'details']"
+          [queryParams]="{
+            uuid: generateUUID(),
+            newsId: articleCenterMain.articleId
+          }"
         >
-          <img [src]="articleCenterMain.imageUrl" class="image ofc hw100 cup br3"/>
+          <img
+            [src]="articleCenterMain.imageUrl"
+            class="image ofc hw100 cup br3"
+          />
         </a>
-        <a [routerLink]="['/','details']" [queryParams]="{uuid:generateUUID(),newsId:articleCenterMain.articleId}" class="bor fs24 font-semibold text-stone-800 leading-tight">
-          {{articleCenterMain.title}}
+        <a
+          [routerLink]="['/', 'details']"
+          [queryParams]="{
+            uuid: generateUUID(),
+            newsId: articleCenterMain.articleId
+          }"
+          class="bor fs24 font-semibold text-stone-800 leading-tight"
+        >
+          {{ articleCenterMain.title }}
         </a>
         <div class="bor fs13 ff1 ptb5 text-stone-500">
-          By {{articleCenterMain.authorFirstName}} {{articleCenterMain.authorLastName}}
+          By {{ articleCenterMain.authorFirstName }}
+          {{ articleCenterMain.authorLastName }}
         </div>
         <div class="test bor fs16 text-stone-800 leading-snug">
-          {{articleCenterMain.shortContent}} Lorem ipsum dolor sit amet consectetur adipisicing elit. A, suscipit! Assumenda impedit laboriosam quibusdam quidem doloremque molestiae numquam architecto ut dolore esse ratione illo doloribus aut culpa facere, quasi ab!
+          {{ articleCenterMain.shortContent }} Lorem ipsum dolor sit amet
+          consectetur adipisicing elit. A, suscipit! Assumenda impedit
+          laboriosam quibusdam quidem doloremque molestiae numquam architecto ut
+          dolore esse ratione illo doloribus aut culpa facere, quasi ab!
         </div>
       </div>
     </ng-container>
@@ -58,17 +74,24 @@
   <!-- right center -->
   <section class="main-right flexcol fg3 fb0 bor">
     <ng-container *ngIf="articleRightMiniList.length != 0">
-      <div class="flexcol  mb25 bor" *ngFor="let article of articleRightMiniList">
-        <a [routerLink]="['/','details']" [queryParams]="{uuid:generateUUID(),newsId:article.articleId}" class="bor fs18 font-semibold text-stone-800 leading-tight">
-          {{article.title}}
+      <div
+        class="flexcol mb25 bor"
+        *ngFor="let article of articleRightMiniList"
+      >
+        <a
+          [routerLink]="['/', 'details']"
+          [queryParams]="{ uuid: generateUUID(), newsId: article.articleId }"
+          class="bor fs18 font-semibold text-stone-800 leading-tight"
+        >
+          {{ article.title }}
         </a>
         <div class="bor fs13 ff1 ptb5 text-stone-500">
-          By {{article.authorFirstName}} {{article.authorLastName}}
+          By {{ article.authorFirstName }} {{ article.authorLastName }}
         </div>
         <div class="test bor fs16 text-stone-800 leading-6">
-          {{article.shortContent}}
+          {{ article.shortContent }}
         </div>
       </div>
-    </ng-container>  
+    </ng-container>
   </section>
 </main>

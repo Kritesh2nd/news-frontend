@@ -1,104 +1,105 @@
 <main class="flexcol p-7 rel bg-stone-400 br2">
-  <span class="flex abs top-2 right-1 " (click)="manageAuthPageClose()">
-    <mat-icon class="flexmid out h-5 w-5 fs20 bor cup" aria-label="close" >close</mat-icon>
+  <span class="flex abs top-2 right-1" (click)="manageAuthPageClose()">
+    <mat-icon class="flexmid out h-5 w-5 fs20 bor cup" aria-label="close"
+      >close</mat-icon
+    >
   </span>
   <section class="flexmid fs20 leading-normal mb-5 font-semibold">
-    <ng-container *ngIf="authSignIn">
-      Log In
-    </ng-container>
-    <ng-container *ngIf="!authSignIn">
-      Sign Up
-    </ng-container>
+    <ng-container *ngIf="authSignIn"> Log In </ng-container>
+    <ng-container *ngIf="!authSignIn"> Sign Up </ng-container>
   </section>
 
   <section class="flexcol">
-    <!-- [formGroup]="userDataForm"
-    (ngSubmit)="onSubmit()" -->
-    <form 
-      [formGroup]="authForm"
-      class="p20  br10 bor "
-    >
-    <ng-container *ngIf="!authSignIn">
-      <div class="flex jcsb mb-5">
-        <div class="flexcol">
-          <input type="text" class="ptb8 plr14 w-[160px] borx br2 fs16" placeholder="first name..." formControlName="firstName" (input)="authFormValidate('firstName')"/>
-          <div class="errorMessage" *ngIf="formValidate">
-            {{errorMessage.firstName}}
+    <form [formGroup]="authForm" class="p20 br10 bor">
+      <ng-container *ngIf="!authSignIn">
+        <div class="flex jcsb mb-5">
+          <div class="flexcol">
+            <input
+              type="text"
+              class="ptb8 plr14 w-[160px] borx br2 fs16"
+              placeholder="first name..."
+              formControlName="firstName"
+              (input)="authFormValidate('firstName')"
+            />
+            <div class="errorMessage" *ngIf="formValidate">
+              {{ errorMessage.firstName }}
+            </div>
+          </div>
+          <div class="flexcol">
+            <input
+              type="text"
+              class="ptb8 plr14 w-[160px] borx br2 fs16"
+              placeholder="last name..."
+              formControlName="lastName"
+              (input)="authFormValidate('lastName')"
+            />
+            <div class="errorMessage" *ngIf="formValidate">
+              {{ errorMessage.lastName }}
+            </div>
           </div>
         </div>
-        <div class="flexcol">
-          <input type="text" class="ptb8 plr14 w-[160px] borx br2 fs16" placeholder="last name..." formControlName="lastName" (input)="authFormValidate('lastName')"/>
-          <div class="errorMessage" *ngIf="formValidate">
-            {{errorMessage.lastName}}
-          </div>
+      </ng-container>
+
+      <div class="flexcol bor mb-5">
+        <input
+          type="text"
+          class="ptb8 plr14 w-[340px] borx br2 fs16"
+          placeholder="email..."
+          formControlName="email"
+          (input)="authFormValidate('email')"
+        />
+        <div class="errorMessage" *ngIf="formValidate">
+          {{ errorMessage.email }}
         </div>
-<!-- 
-        <input type="text" class="ptb8 plr14 w-[160px] borx br2 fs16" placeholder="first name..." formControlName="firstName" (input)="authFormValidate('firstName')"/>
-        <input type="text" class="ptb8 plr14 w-[160px] borx br2 fs16" placeholder="last name..." formControlName="lastName" (input)="authFormValidate('lastName')"/>
-         -->
       </div>
-    </ng-container>
 
-    <div class="flexcol bor mb-5">
-      <input type="text" class="ptb8 plr14 w-[340px] borx br2 fs16" placeholder="email..." formControlName="email" (input)="authFormValidate('email')"/>
-      <div class="errorMessage" *ngIf="formValidate">
-        {{errorMessage.email}}
+      <div class="bor flexcol aic mb-7 rel">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="ptb8 plr14 w-[340px] borx br2 fs16"
+          placeholder="password..."
+          formControlName="password"
+          (input)="authFormValidate('password')"
+        />
+        <mat-icon
+          class="flexmid abs right-2 out h-5 w-5 fs20 bor cup top-2"
+          aria-label="remove_red_eye"
+          (click)="managePasswordType()"
+          >remove_red_eye</mat-icon
+        >
+        <div class="errorMessage w100" *ngIf="formValidate">
+          {{ errorMessage.password }}
+        </div>
       </div>
-    </div>
 
-    <!-- suggested change removes error of expressionchangedafterchecked -->
-
-    <div class="bor flexcol aic mb-5 rel">
-      <input [type]="showPassword?'text':'password'" class="ptb8 plr14 w-[340px] borx br2 fs16" placeholder="password..." formControlName="password" (input)="authFormValidate('password')"/>
-      <mat-icon class="flexmid abs right-2 out h-5 w-5 fs20 bor cup top-2" aria-label="remove_red_eye" (click)="managePasswordType()">remove_red_eye</mat-icon>
-      <div class="errorMessage w100" *ngIf="formValidate">
-        {{errorMessage.password}}
+      <div class="flex mb-5 none">
+        <label class="flex gap-2 bor">
+          <input type="checkbox" name="checkbox" value="value" required />
+          Remember Me
+        </label>
       </div>
-    </div>
 
-    <!-- current -->
-    <!-- <div class="bor flexcol aic mb-5 rel">
-      <input [type]="managePasswordType()" class="ptb8 plr14 w-[340px] borx br2 fs16" placeholder="password..." formControlName="password" (input)="authFormValidate('password')"/>
-      <mat-icon class="flexmid abs right-2 out h-5 w-5 fs20 bor cup top-2" aria-label="remove_red_eye" (click)="managePasswordType()">remove_red_eye</mat-icon>
-      <div class="errorMessage w100" *ngIf="formValidate">
-        {{errorMessage.password}}
+      <div class="button flex bor mb-2">
+        <div
+          class="authButton flexmid br3 borx w100 cup bg-stone-600 text-stone-200 hover:text-white hover:bg-stone-700"
+        >
+          <ng-container *ngIf="authSignIn">
+            <div class="flexmid p8 hw100" (click)="manageLogin()">Log In</div>
+          </ng-container>
+          <ng-container *ngIf="!authSignIn">
+            <div class="flexmid p8 hw100" (click)="manageSignUp()">Sign Up</div>
+          </ng-container>
+        </div>
       </div>
-    </div> -->
 
-    <div class="flex mb-5">
-      <label class="flex gap-2 bor">
-        <input type="checkbox" name="checkbox" value="value" required>
-        Remember Me
-     </label>
-     
-    </div>
-
-    <div class="button flex bor mb-2">
-      <div class="authButton flexmid br3 borx w100 cup bg-stone-600 text-stone-200 hover:text-white hover:bg-stone-700">
-        <ng-container *ngIf="authSignIn">
-          <div class="flexmid p8 hw100" (click)="manageLogin()">
-            Log In
-          </div>
-        </ng-container>
-        <ng-container *ngIf="!authSignIn">
-          <div class="flexmid p8 hw100" (click)="manageSignUp()">
-            Sign Up
-          </div>
-        </ng-container>
+      <div class="flexmid">
+        <div class="hover:underline cup" (click)="handelAuthType()">
+          <ng-container *ngIf="authSignIn"> Create an Account? </ng-container>
+          <ng-container *ngIf="!authSignIn">
+            Already have account?
+          </ng-container>
+        </div>
       </div>
-    </div>
-
-    <div class="flexmid">
-      <div class=" hover:underline cup" (click)="handelAuthType()">
-        <ng-container *ngIf="authSignIn">
-          Create an Account?
-        </ng-container>
-        <ng-container *ngIf="!authSignIn">
-          Already have account?
-        </ng-container>
-      </div>
-    </div>
     </form>
   </section>
-
 </main>

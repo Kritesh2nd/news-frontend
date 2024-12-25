@@ -1,114 +1,31 @@
 <main class="flexcol rel h-100 bor">
-  <section class="flex authenticationMain transparentBg abs h-100 w100 bg5 z-40 fixed" *ngIf="displayAuthPage && !urlDashboard">
+  <section
+    class="flex authenticationMain transparentBg abs h-100 w100 bg5 z-40 fixed"
+    *ngIf="displayAuthPage && !urlDashboard"
+  >
     <div class="flexmid hw100 rel bor">
-      <div class="hw100 abs bor " (click)="handelAuthPage()">
-      </div>
-      <div class=" abs bor bor mb80">
-        <div class="hw100 ">
+      <div class="hw100 abs bor" (click)="handelAuthPage()"></div>
+      <div class="abs bor bor mb80">
+        <div class="hw100">
           <app-auth (manageAuthPage)="handelAuthPage()"></app-auth>
         </div>
       </div>
     </div>
   </section>
 
-
-  <!-- <section class="bor none">
-    <app-user></app-user>
-  </section> -->
-  
-  <app-header class="bor" *ngIf="!urlDashboard" (manageAuthPage)="handelAuthPage()"></app-header>
+  <app-header
+    class="bor"
+    *ngIf="!urlDashboard"
+    (manageAuthPage)="handelAuthPage()"
+  ></app-header>
 
   <section class="fg1">
     <router-outlet class=""></router-outlet>
-    <!-- <mat-icon aria-label="Example home icon">sentiment_very_dissatisfied</mat-icon> -->
   </section>
   <app-footer class="bor" *ngIf="!urlDashboard"></app-footer>
 </main>
-
 <!-- 
 
-ng g component pages/General --skip-tests
-ng g component pages/DashboardMain --skip-tests
-
-
-ng g component components/Navigaiton --skip-tests
-ng g component components/Header --skip-tests
-ng g component components/Details --skip-tests
-ng g component components/Footer --skip-tests
-ng g component components/Container --skip-tests
-ng g component components/ErrorPage --skip-tests
-ng g component components/ServerOffline --skip-tests
-
-ng g component components/container/HeadlineTitles --skip-tests
-ng g component components/container/MainNews --skip-tests
-ng g component components/container/VisualStories --skip-tests
-ng g component components/container/LatestArticles --skip-tests
-ng g component components/container/CategoryNews --skip-tests
-
-
-
-ng g component components/container/MainContent --skip-tests
-ng g component components/container/MainLeft --skip-tests
-ng g component components/container/MainCenter --skip-tests
-ng g component components/container/MainRight --skip-tests
-
-ng g component components/article/ArticleTitle --skip-tests
-ng g component components/article/ArticleMini --skip-tests
-ng g component components/article/ArticleMain --skip-tests
-
-ng g component authentication/Auth --skip-tests
-ng g component authentication/SignUp --skip-tests
-ng g component authentication/SignIn --skip-tests
-
-ng g component dashboard/DashSidebar --skip-tests
-ng g component dashboard/ArticleCreate --skip-tests
-ng g component dashboard/ArticleRead --skip-tests
-
-
-ng g service services/api --skip-tests
-ng g service services/article --skip-tests
-ng g service services/category --skip-tests
-ng g service services/users --skip-tests
-
-
-ng g module utils/material
-
-
-ng generate pipe pipes/capitalizeFirst --skip-tests
-ng generate pipe pipes/HighlightKeyword --skip-tests
-
-ng generate directive directive/HighlightKeyword --skip-tests
-ng generate directive directive/SelectMatch --skip-tests
-
-
-
--->
-
-<!-- 
-
-ng g component components/article/ArticleMain --skip-tests
-
--->
-
-<!-- 
-
-ng g component dashboard/Dashboard --skip-tests
-
-
-article
-add
-edit
-list
-details
-
-user
-list, details
-
-statistics
-most read article (normal, category, date)
-
-editor
-
-
+eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJlZGl0b3IiLCJyZWFkZXIiLCJhZG1pbiJdLCJzdWIiOiJrcml0ZXNoQGdtYWlsLmNvbSIsImlhdCI6MTcyMzAyNTk2NiwiZXhwIjoxNzIzMDI5NTY2fQ.JCpdbvdQzwT1VswPJeB8orQ7SHz9eUZZ3HtW_eVGJZQ
 
 -->

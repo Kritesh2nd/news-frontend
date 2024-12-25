@@ -6,9 +6,18 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MaterialModule } from './utils/material/material.module';
 import { NgFor, NgIf } from '@angular/common';
 import { jwtInterceptor } from './interceptor/JWTInterceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient(), RouterOutlet, MaterialModule, RouterModule, NgIf, NgFor,provideHttpClient(withInterceptors([jwtInterceptor]))]
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(),
+    RouterOutlet, MaterialModule, RouterModule, NgIf, NgFor,
+    provideHttpClient(withInterceptors([jwtInterceptor])),
+    provideAnimations(),
+    provideToastr(),
+  ]
 };

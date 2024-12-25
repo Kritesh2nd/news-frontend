@@ -67,6 +67,7 @@
           "
           formControlName="title"
           placeholder="article name..."
+          required
         />
       </div>
 
@@ -89,6 +90,7 @@
           "
           formControlName="shortContent"
           placeholder="article sub heading..."
+          required
         />
       </div>
 
@@ -110,6 +112,7 @@
           "
           name="category"
           formControlName="category"
+          required
         >
           <option
             class="formName fs15 ptb3 plr6 borx2 br3 mb12 none"
@@ -145,6 +148,7 @@
           "
           formControlName="content"
           placeholder="article content..."
+          required
         ></textarea>
       </div>
 
@@ -161,15 +165,17 @@
         >
         <input
           type="file"
+          accept="image/png, image/jpg, image/jpeg"
           class="formInput formName p7 plr10 fs16 fg1 bg-transparent"
           [ngClass]="
             pageType == 'detailArticle' ? 'text-[#5A5A5A] formInput-detail' : ''
           "
+          value="selectedFile"
           (change)="onFileSelected($event)"
+          required
         />
       </div>
       <div class="flex">
-        
         <!-- create page button -->
         <div class="" *ngIf="pageType == 'createArticle'">
           <button

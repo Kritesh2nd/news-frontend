@@ -22,10 +22,10 @@ export class CategoryNewsComponent {
 
   category: string = "";
 
-  constructor(private router: Router,private route: ActivatedRoute,private articlesService: ArticlesService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private articlesService: ArticlesService) { }
 
-  fetchArticleImageMiniList(category:string, pageNumber:number, pageSize: number): Observable<Article[]> {
-    return this.articlesService.getArticleList('http://localhost:8080/article/listMiniImage?category='+category+'&pagination=true&pageNumber='+pageNumber+'&pageSize='+pageSize)
+  fetchArticleImageMiniList(category: string, pageNumber: number, pageSize: number): Observable<Article[]> {
+    return this.articlesService.getArticleList('http://localhost:8080/article/listMiniImage?category=' + category + '&pagination=true&pageNumber=' + pageNumber + '&pageSize=' + pageSize)
       .pipe(
         catchError((error) => {
           return of([]);
@@ -33,23 +33,20 @@ export class CategoryNewsComponent {
       );
   }
 
-  fetchArticleImageMiniListNew(){
-    this.fetchArticleImageMiniList(this.category,0,10).subscribe({
-      next: (data: Article[]) => {this.categoryNewsList = [...data];},
-      error: (error) => {console.log(error);}
+  fetchArticleImageMiniListNew() {
+    this.fetchArticleImageMiniList(this.category, 0, 10).subscribe({
+      next: (data: Article[]) => { this.categoryNewsList = [...data]; },
+      error: (error) => { console.log(error); }
     });
   }
+
   ngOnInit(): void {
-    
     this.route.queryParamMap.subscribe(params => {
       const category = params.get('value');
       this.category = category ? category : this.navigateToHomePage();
-      
+
       this.fetchArticleImageMiniListNew();
     });
-
-    
-
   }
 
   navigateToHomePage(): string {

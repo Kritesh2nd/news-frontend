@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashSidebarComponent } from '../../dashboard/dash-sidebar/dash-sidebar.component';
-import { DashMainSideBarIntf , dashboardSideBarTest } from '../../../utils/constant';
+import { DashMainSideBarIntf, dashboardSideBarTest } from '../../../utils/constant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleCreateComponent } from '../../dashboard/article-create/article-create.component';
 import { ArticleReadComponent } from '../../dashboard/article-read/article-read.component';
@@ -10,23 +10,27 @@ import { NgFor, NgIf } from '@angular/common';
   selector: 'app-dashboard-main',
   standalone: true,
   imports: [
-    NgIf,NgFor,
+    NgIf, NgFor,
     DashSidebarComponent, ArticleCreateComponent, ArticleReadComponent,
   ],
   templateUrl: './dashboard-main.component.html',
   styleUrl: './dashboard-main.component.scss'
 })
-export class DashboardMainComponent implements OnInit{
-  
-  dashData : DashMainSideBarIntf[] = [];
-  dashPage : string = "";
+export class DashboardMainComponent implements OnInit {
+  tokenExists: boolean = false;
+  dashData: DashMainSideBarIntf[] = [];
+  dashPage: string = "";
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
     this.dashData = dashboardSideBarTest;
   }
   ngOnInit(): void {
     const data = localStorage.getItem("jwt_token");
-    if(!data){
+    this.tokenExists = data!="";
+    if (!data || !this.tokenExists) {
       this.navigateToHomePage();
     }
 
@@ -39,8 +43,5 @@ export class DashboardMainComponent implements OnInit{
   navigateToHomePage() {
     this.router.navigate(['/']);
   }
-  
 
-
-  
 }

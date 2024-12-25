@@ -12,25 +12,25 @@ import { catchError, Observable, of } from 'rxjs';
   standalone: true,
   imports: [
     NgIf, NgFor,
-    RouterOutlet, RouterModule, 
+    RouterOutlet, RouterModule,
   ],
   templateUrl: './latest-articles.component.html',
   styleUrl: './latest-articles.component.scss'
 })
-export class LatestArticlesComponent implements AfterViewInit{
-  
+export class LatestArticlesComponent implements AfterViewInit {
+
   latestArticlesList: Article[] = [];
 
-  choosenArticle : Article | undefined;
+  choosenArticle: Article | undefined;
 
-  mostRead : Article[] = [];
+  mostRead: Article[] = [];
 
-  ediotrsPick : Article[] = [];
+  ediotrsPick: Article[] = [];
 
-  constructor(private articlesService: ArticlesService) {}
+  constructor(private articlesService: ArticlesService) { }
 
-  fetchArticleImageMiniList(pageNumber:number, pageSize: number): Observable<Article[]> {
-    return this.articlesService.getArticleList('http://localhost:8080/article/listMiniImage?pagination=true&pageNumber='+pageNumber+'&pageSize='+pageSize)
+  fetchArticleImageMiniList(pageNumber: number, pageSize: number): Observable<Article[]> {
+    return this.articlesService.getArticleList('http://localhost:8080/article/listMiniImage?pagination=true&pageNumber=' + pageNumber + '&pageSize=' + pageSize)
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -50,7 +50,7 @@ export class LatestArticlesComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-      this.fetchArticleImageMiniList(0,10).subscribe({
+    this.fetchArticleImageMiniList(0, 10).subscribe({
       next: (data: Article[]) => {
         this.latestArticlesList = [...data];
       },
@@ -58,7 +58,7 @@ export class LatestArticlesComponent implements AfterViewInit{
         console.log(error);
       }
     });
-    
+
   }
 
   generateUUID(): string {
