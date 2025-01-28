@@ -1,0 +1,27 @@
+<main class="flexcol h-100 p20">
+  <div class="text-xl font-semibold">Editor Request List</div>
+  <div class="flex">
+    <!-- by category, by dates, by author -->
+  </div>
+  <div class="flex mb-3">
+    <div
+      class="w100 p20 br10 bg-[#EDEADE] drop-shadow-[3px_3px_8px_rgba(0,0,0,.5)] borx3"
+    >
+      <table class="w100 bg-[#EDEADE]">
+        <tr>
+          <th>SN</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Editor Role</th>
+        </tr>
+        
+        <tr *ngFor="let ulist of userList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ulist.firstName}} {{ulist.lastName}}</td>
+          <td>{{ulist.email}}</td>
+          <td class="text-underline cursor-pointer" (click)="acceptEditorRole(ulist.userId)">Accept</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</main>

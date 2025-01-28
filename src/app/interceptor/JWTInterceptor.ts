@@ -19,6 +19,7 @@ export const jwtInterceptor: HttpInterceptorFn = (
   if (tokenData) {
     try {
       if (tokenData) {
+        console.log("req",req)
         const modifiedReq = req.clone({
           setHeaders: {
             Authorization: `Bearer ${tokenData}`,

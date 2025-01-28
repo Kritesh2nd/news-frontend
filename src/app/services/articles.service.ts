@@ -51,9 +51,9 @@ export class ArticlesService {
     );
   };
 
-  createArticleImage = (apiUrl: string, data: CreateArticle, file: File): Observable<BasicResponse> => {
+  createArticleImage = (apiUrl: string, data: CreateArticle, file: File | null): Observable<BasicResponse> => {
     const formData: FormData = new FormData();
-    formData.append('img', file, file.name);
+    formData.append('img', file==null?new Blob([]):file, file==null?"null":file.name);
     formData.append('form', new Blob([JSON.stringify(data)], {
       type: 'application/json'
     }));

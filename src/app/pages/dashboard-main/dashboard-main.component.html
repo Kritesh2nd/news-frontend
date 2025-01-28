@@ -38,6 +38,15 @@
       >
         <app-article-create pageType="updateArticle"></app-article-create>
       </div>
+
+      <!-- request editor -->
+      <div
+        class=""
+        data-name="request editor"
+        *ngIf="dashPage === 'requestEditor'"
+      >
+        <app-user-list pageType="requestEditor"> </app-user-list>
+      </div>
     </div>
   </section>
 </main>

@@ -5,6 +5,7 @@
       [routerLink]="['/', 'category']"
       [queryParams]="{value:cate.categoryName| lowercase,}"
       *ngFor="let cate of categoryList"
+      [ngClass]="{ 'underline': category == cate.categoryName }"
     >
       {{ cate.categoryName | capitalizeFirst }}
     </a>
@@ -69,9 +70,12 @@
       </div>
     </div>
   </section>
-  <section class="flex" *ngIf="!showSearch">
+  <section class="flex gap-4" *ngIf="!showSearch">
     <div class="flexmid cup bor" (click)="manageAuthNavigationPage()">
       <mat-icon aria-label="account_circle">account_circle</mat-icon>
+    </div>
+    <div class="flexmid cup bor" *ngIf="tokenDataIn" (click)="LogOut()">
+      Log Out
     </div>
   </section>
   <section class="flexmid" (click)="manageSearch()" *ngIf="!showSearch">

@@ -23,6 +23,15 @@
           >Read Article</a
         >
       </div>
+      <div class="flex mb5 bor">
+        <a
+          *ngIf="showEditorRequest"
+          [routerLink]="['/dashboard']"
+          [queryParams]="{ page: 'requestEditor' }"
+          class="p10 hw100 bor hover:underline"
+          >Editor Request</a
+        >
+      </div>
 
       <div class="p10 mb5 cup bor hover:underline" (click)="LogOut()">
         Log Out

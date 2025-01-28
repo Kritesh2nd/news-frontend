@@ -46,6 +46,7 @@ export class ArticleCreateComponent implements OnInit {
     imageUrl: "",
     publishedDate: "",
     category: "business",
+    updateImage: false,
   };
 
   categoryList: Category[] = [];
@@ -75,7 +76,6 @@ export class ArticleCreateComponent implements OnInit {
     category: "",
   })
 
-
   ngOnInit(): void {
     this.getCategoryList();
 
@@ -91,7 +91,7 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.articleDataForm.valid && this.selectedFile != null) {
+    if (this.articleDataForm.valid) {
       console.log("subimityes");
       this.createArticle = this.articleDataForm.value as CreateArticle;
       this.createArticleImageUrl(this.createArticle)
@@ -112,6 +112,7 @@ export class ArticleCreateComponent implements OnInit {
       content: articleData.content,
       publishedDate: "",
       category: articleData.category,
+      updateImage: this.selectedFile != null,
     }
     const addUrl = 'http://localhost:8080/article/add';
     const updateUrl = 'http://localhost:8080/article/update';
@@ -125,7 +126,7 @@ export class ArticleCreateComponent implements OnInit {
       finalUrl = updateUrl;
       toastMessage = "Article updated successfully";
     }
-    if (this.selectedFile) {
+    console.log("finalUrl, articleDataSave as CreateArticle, this.selectedFile",finalUrl, articleDataSave as CreateArticle, this.selectedFile)
       this.articleService
         .createArticleImage(finalUrl, articleDataSave as CreateArticle, this.selectedFile)
         .subscribe({
@@ -151,7 +152,7 @@ export class ArticleCreateComponent implements OnInit {
             this.showFailed("Failed to create article");
           },
         });
-    }
+    
   }
 
   getCategoryList(): void {

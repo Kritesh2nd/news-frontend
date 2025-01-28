@@ -66,6 +66,7 @@ export interface Article{
   imageUrl?: string,
   publishedDate?: string,
   category?:string,
+  updateImage?:false,
 }
 
 export interface ArticleRequest{
@@ -195,6 +196,7 @@ export interface CreateArticle {
   content?: string,
   publishedDate?: string,
   category: string,
+  updateImage?:false,
 }
 
 

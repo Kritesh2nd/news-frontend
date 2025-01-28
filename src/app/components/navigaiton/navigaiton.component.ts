@@ -1,7 +1,7 @@
 import { LowerCasePipe, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Article, Category } from "../../../types";
-import { RouterOutlet, RouterModule, Router } from '@angular/router';
+import { ActivatedRoute, RouterOutlet, RouterModule, Router } from '@angular/router';
 import { MaterialModule } from '../../utils/material/material.module';
 
 import { CategoryService } from './../../services/category.service';
@@ -15,11 +15,13 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import { NgClass } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navigaiton',
   standalone: true,
-  imports: [NgFor, NgIf, RouterOutlet, RouterModule, LowerCasePipe, MaterialModule, FormsModule,
+  imports: [NgFor, NgIf, NgClass, RouterOutlet, RouterModule, LowerCasePipe, MaterialModule, FormsModule,
     CapitalizeFirstPipe, HighlightKeywordDirective,
   ],
   templateUrl: './navigaiton.component.html',
@@ -40,6 +42,8 @@ export class NavigaitonComponent implements OnInit {
     }
   }
 
+  category: string = "";
+
   tempArticleTilteList: Article[] = [];
 
   articleTilteList: Article[] = [];
@@ -54,11 +58,20 @@ export class NavigaitonComponent implements OnInit {
 
   subscription: Subscription | undefined;
 
+  token: any = localStorage.getItem('jwt_token') || null;
+  tokenDataIn: boolean = localStorage.getItem('jwt_token') ? true : false;
+  roles: string[] = this.token ? JSON.parse(window.atob(this.token.split('.')[1])).roles : [];
+  showDashboard: boolean = this.roles.length > 0 ? this.roles.includes("admin") || this.roles.includes("editor") : false;
+
   constructor(
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private categoryService: CategoryService,
-    private articlesService: ArticlesService
+    private articlesService: ArticlesService,
+    private toastr: ToastrService,
   ) { }
+
+
 
   fetchSearchResult(): void {
     this.articlesService.getArticleList('http://localhost:8080/article/request?search=' + this.searchKeyword)
@@ -96,6 +109,14 @@ export class NavigaitonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    console.log("showDashboard",this.showDashboard)
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      const category = params.get('value');
+      this.category = category ? category : "";
+
+    });
+
     this.categoryService.getCategoryList('http://localhost:8080/category/list')
       .subscribe({
         next: (data: Category[]) => {
@@ -104,7 +125,7 @@ export class NavigaitonComponent implements OnInit {
         error: (error) => {
           localStorage.removeItem("jwt_token");
           this.navigateToDashboard();
-          console.log("navigation error",error);
+          console.log("navigation error", error);
         },
       })
     this.fetchSearchResult();
@@ -125,6 +146,16 @@ export class NavigaitonComponent implements OnInit {
 
   generateUUID(): string {
     return uuidv4();
+  }
+
+  LogOut(): void {
+    localStorage.removeItem("jwt_token");
+    this.router.navigate(['/']);
+    this.showWarning("Logged out successfully");
+  }
+
+  showWarning(message: string) {
+    this.toastr.info(message, "Success")
   }
 }
 

@@ -16,6 +16,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DashSidebarComponent implements OnInit {
   sideBar: Link[] = [];
+  token: any = localStorage.getItem('jwt_token') || null;
+  roles: string[] = this.token ? JSON.parse(window.atob(this.token.split('.')[1])).roles : [];
+  showEditorRequest: boolean = this.roles.length > 0 ? this.roles.includes("admin"): false;
 
   constructor(
     private router: Router,

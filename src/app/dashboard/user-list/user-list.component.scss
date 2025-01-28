@@ -1,0 +1,24 @@
+th,
+td {
+  border-bottom: 1px solid #aaa;
+  padding: 6px 10px;
+  text-align: left;
+}
+td {
+  border-bottom: 1px solid #bbb;
+}
+
+td:first-child {
+  padding: 0;
+  text-align: center;
+}
+td:nth-child(1) {
+  width: 4%;
+}
+
+td:nth-child(2) {
+  width: 35%;
+}
+td:nth-child(3) {
+  width: 35%;
+}

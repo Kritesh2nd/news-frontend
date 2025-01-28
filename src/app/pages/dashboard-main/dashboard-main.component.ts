@@ -1,9 +1,11 @@
+import { UserListComponent } from './../../dashboard/user-list/user-list.component';
 import { Component, OnInit } from '@angular/core';
 import { DashSidebarComponent } from '../../dashboard/dash-sidebar/dash-sidebar.component';
 import { DashMainSideBarIntf, dashboardSideBarTest } from '../../../utils/constant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleCreateComponent } from '../../dashboard/article-create/article-create.component';
 import { ArticleReadComponent } from '../../dashboard/article-read/article-read.component';
+
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -11,7 +13,7 @@ import { NgFor, NgIf } from '@angular/common';
   standalone: true,
   imports: [
     NgIf, NgFor,
-    DashSidebarComponent, ArticleCreateComponent, ArticleReadComponent,
+    UserListComponent,DashSidebarComponent, ArticleCreateComponent, ArticleReadComponent,
   ],
   templateUrl: './dashboard-main.component.html',
   styleUrl: './dashboard-main.component.scss'

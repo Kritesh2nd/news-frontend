@@ -29,4 +29,16 @@ export class UsersService {
     return this.apiService.post<BasicResponse>(url, body);
   };
 
+  requestEditorRole = (url: string): Observable<BasicResponse> => {
+    return this.apiService.get<BasicResponse>(url, {
+      responseType: 'json',
+    });
+  };
+
+  acceptEditorRole = (url: string): Observable<BasicResponse> => {
+    return this.apiService.get<BasicResponse>(url, {
+      responseType: 'json',
+    });
+  };
+
 }

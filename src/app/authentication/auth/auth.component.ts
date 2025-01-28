@@ -31,10 +31,10 @@ export class AuthComponent {
   }
 
   authForm = this.formBuilder.group({
-    firstName: 'Kritesh',
-    lastName: 'Thapa',
-    email: 'kritesh@gmail.com',
-    password: 'password',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   })
 
 
@@ -95,7 +95,7 @@ export class AuthComponent {
     if (this.validCheck.firstName && this.validCheck.lastName && this.validCheck.email && this.validCheck.password) {
       console.log("valid input valid user data");
       this.sigupUser(userData as UserSignUp);
-      
+
     }
     else {
       console.log("please input valid user data");
@@ -173,10 +173,12 @@ export class AuthComponent {
             localStorage.setItem('jwt_token', data.token);
             this.authForm.reset();
             this.manageAuthPageClose();
-            this.navigateToDashboard();
+            console.log("decodedJWT", decodedJWT)
+            if (decodedJWT.roles.includes("admin")) {
+              this.navigateToDashboard();
+            }
             this.showSuccess("Logged in successfully");
           }
-
         },
         error: (error) => {
           console.log("token dosent exist", error);
@@ -188,11 +190,11 @@ export class AuthComponent {
     this.usersService.userSignUp('http://localhost:8080/signup', userInfo)
       .subscribe({
         next: (data) => {
-          if(data.success){
+          if (data.success) {
             this.showSuccess("Account created successfully");
             this.authSignIn = true;
           }
-          else if(!data.success){
+          else if (!data.success) {
             this.showWaring("This email is already in use");
           }
         },
